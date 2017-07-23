@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1058446402920",
+    "firebase_url": "https://healthquest-ac980.firebaseio.com",
+    "project_id": "healthquest-ac980",
+    "storage_bucket": "healthquest-ac980.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058446402920:android:db975d276b319af4",
+        "android_client_info": {
+          "package_name": "com.example.simona.healthquest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058446402920-3orldnq75pevq9ql9oo64boali6slcln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoARx3T83Mu6B0N7ugo3rbI_bgNB9skfA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

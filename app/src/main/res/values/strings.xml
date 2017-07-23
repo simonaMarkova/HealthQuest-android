@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HealthQuest</string>
+
+    <string name="facebook_app_id">560958610908425</string>
+    <string name="fb_login_protocol_scheme">fb560958610908425</string>
+
+</resources>

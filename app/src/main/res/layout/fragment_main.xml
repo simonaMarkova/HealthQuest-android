@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:src="@drawable/brain_only"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
+
+        <LinearLayout
+            android:id="@+id/playBtns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnMainPlay"
+                style="@style/ButtonStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="Play" />
+
+            <Button
+                android:id="@+id/btnMainMiniGame"
+                style="@style/ButtonStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Mini game" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rangListBtns"
+            android:layout_below="@+id/playBtns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+
+                style="@style/ButtonStyle"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:text="Rankings" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/aboutBtns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/rangListBtns">
+
+            <Button
+                android:id="@+id/btnAbout"
+                style="@style/ButtonStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="About" />
+
+            <Button
+                android:id="@+id/btnTutorial"
+                style="@style/ButtonStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Tutorial" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/exitBtns"
+            android:layout_below="@+id/aboutBtns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnExit"
+                style="@style/ButtonStyle"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:text="Exit" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
