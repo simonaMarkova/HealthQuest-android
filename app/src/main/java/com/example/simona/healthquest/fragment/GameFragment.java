@@ -1,6 +1,7 @@
 package com.example.simona.healthquest.fragment;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,14 +19,18 @@ import com.example.simona.healthquest.R;
 import com.example.simona.healthquest.adapter.RecyclerAnswerAdapter;
 import com.example.simona.healthquest.adapter.RecyclerImageAnswerAdapter;
 import com.example.simona.healthquest.enumeration.QuestionType;
+import com.example.simona.healthquest.helper.JSON;
 import com.example.simona.healthquest.model.AnswerImage;
+import com.example.simona.healthquest.model.Disease;
 import com.example.simona.healthquest.model.Question;
 import com.example.simona.healthquest.model.QuestionAnswer;
 import com.example.simona.healthquest.model.QuestionImage;
 import com.example.simona.healthquest.model.User;
 import com.example.simona.healthquest.model.UserQuestion;
 import com.example.simona.healthquest.network.RetrofitManager;
+import com.example.simona.healthquest.persistance.Persistence;
 import com.example.simona.healthquest.util.Constants;
+import com.example.simona.healthquest.util.UI;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -47,6 +52,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private RelativeLayout imageQuestionAnswer;
     private RelativeLayout questionImageAnswers;
     private RelativeLayout endOfGame;
+    private RelativeLayout startOfGame;
     private RecyclerView rvQuestionAnswers;
     private RecyclerView rvImageQuestionAnswers;
     private RecyclerView rvQuestionImageAnswers;
@@ -54,6 +60,8 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvEnd;
     private TextView tvImageQuestionAnswer;
     private TextView tvQuestionImageAnswer;
+    private TextView tvCountDown;
+    private TextView tvStart;
     private Button btnGameSaveAnswer;
     private Button btnSaveImageQuestionAnswer;
     private Button btnGoBack;
@@ -63,13 +71,15 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private RecyclerImageAnswerAdapter imageAnswerAdapter;
     private User user;
     private Question question;
-    private QuestionImage questionImage;
+    private Disease disease;
     private List<QuestionAnswer> answerList;
     private List<AnswerImage> answerImageList;
     private Date opened;
     private Date answered;
     private int numberQuestions;
     private int points;
+    private String type;
+    private CountDownTimer timer;
 
 
     @Override
@@ -82,10 +92,13 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_game, container, false);
 
+        user = (User) JSON.fromJson(Persistence.getString(Persistence.KEY_USER,""),User.class);
         tvQuestionAnswer = (TextView) rootView.findViewById(R.id.tvQuestionAnswer);
         tvEnd = (TextView) rootView.findViewById(R.id.tvEnd);
         tvImageQuestionAnswer = (TextView) rootView.findViewById(R.id.tvImageQuestionAnswer);
         tvQuestionImageAnswer = (TextView) rootView.findViewById(R.id.tvQuestionImageAnswer);
+        tvCountDown = (TextView) rootView.findViewById(R.id.tvCountDown);
+        tvStart = (TextView) rootView.findViewById(R.id.tvStart);
 
         rvQuestionAnswers = (RecyclerView) rootView.findViewById(R.id.rvQuestionAnswers);
         rvImageQuestionAnswers = (RecyclerView) rootView.findViewById(R.id.rvImageQuestionAnswers);
@@ -104,6 +117,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         imageQuestionAnswer = (RelativeLayout) rootView.findViewById(R.id.imageQuestionAnswer);
         questionImageAnswers = (RelativeLayout) rootView.findViewById(R.id.questionImageAnswers);
         endOfGame = (RelativeLayout) rootView.findViewById(R.id.endOfGame);
+        startOfGame = (RelativeLayout) rootView.findViewById(R.id.startOfGame);
 
         ivImageQuestion = (ImageView) rootView.findViewById(R.id.ivImageQuestion);
 
@@ -126,94 +140,111 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
 
         numberQuestions = 5;
         points = 0;
-        generateQuestionAnswer();
 
-        return rootView;
-    }
-
-    public static GameFragment newInstance() {
-        return new GameFragment();
-    }
-
-    private void generateQuestionAnswer() {
         endOfGame.setVisibility(View.GONE);
         questionAnswer.setVisibility(View.GONE);
         imageQuestionAnswer.setVisibility(View.GONE);
         questionImageAnswers.setVisibility(View.GONE);
-        RetrofitManager.getInstance().getRetrofitService().getUser(Long.valueOf(1)).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    user = response.body();
+        startOfGame.setVisibility(View.VISIBLE);
+        tvStart.setText(R.string.game_countdown);
+        timer = new CountDownTimer(10000, 1000) {
 
-                    RetrofitManager.getInstance().getRetrofitService().getRandomQuestion(user.getLevel().id, user.id).enqueue(new Callback<Question>() {
+            public void onTick(long millisUntilFinished) {
+                tvCountDown.setText(Integer.toString((int)millisUntilFinished/1000));
+            }
+
+            public void onFinish() {
+                tvCountDown.setText("0");
+                type = getArguments().getString("type");
+                if (type.equals("game")) {
+                    generateQuestionAnswer();
+                } else if (type.equals("mini-game")) {
+                    RetrofitManager.getInstance().getRetrofitService().getRandomDisease().enqueue(new Callback<Disease>() {
                         @Override
-                        public void onResponse(Call<Question> call, Response<Question> response) {
+                        public void onResponse(Call<Disease> call, Response<Disease> response) {
                             if (response.isSuccessful()) {
-                                question = response.body();
-
-                                if (question.getQuestionType() == QuestionType.ANSWER_SELECT) {
-                                    questionAnswer.setVisibility(View.VISIBLE);
-                                    tvQuestionAnswer.setText(question.getQuestion());
-                                    RetrofitManager.getInstance().getRetrofitService().getAnswers(question.id).enqueue(new Callback<List<QuestionAnswer>>() {
-                                        @Override
-                                        public void onResponse(Call<List<QuestionAnswer>> call, Response<List<QuestionAnswer>> response) {
-                                            if (response.isSuccessful()) {
-                                                opened = null;
-                                                answerList = response.body();
-                                                answerAdapter.updateAnswers(answerList);
-                                            }
-                                        }
-                                        @Override
-                                        public void onFailure(Call<List<QuestionAnswer>> call, Throwable t) {
-                                        }
-                                    });
-                                } else if (question.getQuestionType() == QuestionType.IMAGE_SELECT) {
-                                    imageQuestionAnswer.setVisibility(View.VISIBLE);
-                                    tvImageQuestionAnswer.setText(question.getQuestion());
-                                    Picasso.with(context).load(Constants.BASE_URL+"/questionImage/getImage/" + question.id).into(ivImageQuestion);
-                                    RetrofitManager.getInstance().getRetrofitService().getAnswers(question.id).enqueue(new Callback<List<QuestionAnswer>>() {
-                                        @Override
-                                        public void onResponse(Call<List<QuestionAnswer>> call, Response<List<QuestionAnswer>> response) {
-                                            if (response.isSuccessful()) {
-                                                opened = null;
-                                                answerList = response.body();
-                                                answerAdapter.updateAnswers(answerList);
-                                            }
-                                        }
-                                        @Override
-                                        public void onFailure(Call<List<QuestionAnswer>> call, Throwable t) {
-                                        }
-                                    });
-                                } else if(question.getQuestionType()==QuestionType.MULTIPLE_IMAGE_SELECT){
-                                    questionImageAnswers.setVisibility(View.VISIBLE);
-                                    tvQuestionImageAnswer.setText(question.getQuestion());
-                                    RetrofitManager.getInstance().getRetrofitService().getImageAnswers(question.id).enqueue(new Callback<List<AnswerImage>>() {
-                                        @Override
-                                        public void onResponse(Call<List<AnswerImage>> call, Response<List<AnswerImage>> response) {
-                                            if (response.isSuccessful()) {
-                                                opened = null;
-                                                answerImageList = response.body();
-                                                imageAnswerAdapter.updateAnswers(answerImageList);
-                                            }
-                                        }
-                                        @Override
-                                        public void onFailure(Call<List<AnswerImage>> call, Throwable t) {
-                                        }
-                                    });
-                                }
+                                disease = response.body();
+                                generateMiniGame();
                             }
                         }
+
                         @Override
-                        public void onFailure(Call<Question> call, Throwable t) {
+                        public void onFailure(Call<Disease> call, Throwable t) {
+                            Toast.makeText(context, R.string.game_error, Toast.LENGTH_LONG).show();
+                            UI.clearBackstack(supportFragmentManager);
                         }
                     });
                 }
             }
+        };
+
+        timer.start();
+
+
+        return rootView;
+    }
+
+    public static GameFragment newInstance(Bundle bundle) {
+        GameFragment gameFragment = new GameFragment();
+        gameFragment.setArguments(bundle);
+        return gameFragment;
+    }
+
+    private void generateMiniGame() {
+        UI.addFragment(supportFragmentManager, R.id.container_layout, ProgressBarFragment.newInstance(), true, 0, 0);
+        endOfGame.setVisibility(View.GONE);
+        questionAnswer.setVisibility(View.GONE);
+        imageQuestionAnswer.setVisibility(View.GONE);
+        questionImageAnswers.setVisibility(View.GONE);
+        startOfGame.setVisibility(View.GONE);
+        RetrofitManager.getInstance().getRetrofitService().getDiseaseRandomQuestion(disease.id, user.id).enqueue(new Callback<Question>() {
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                if (response.isSuccessful()) {
+                    question = response.body();
+                    getAnswersForQuestion();
+                }else {
+                    Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                    UI.clearBackstack(supportFragmentManager);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                UI.clearBackstack(supportFragmentManager);
             }
         });
+
+    }
+
+    private void generateQuestionAnswer() {
+        UI.addFragment(supportFragmentManager, R.id.container_layout, ProgressBarFragment.newInstance(), true, 0, 0);
+        endOfGame.setVisibility(View.GONE);
+        questionAnswer.setVisibility(View.GONE);
+        imageQuestionAnswer.setVisibility(View.GONE);
+        questionImageAnswers.setVisibility(View.GONE);
+        startOfGame.setVisibility(View.GONE);
+
+        RetrofitManager.getInstance().getRetrofitService().getRandomQuestion(user.getLevel().id, user.id).enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                if (response.isSuccessful()) {
+                    question = response.body();
+                    getAnswersForQuestion();
+                }else {
+                    Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                    UI.clearBackstack(supportFragmentManager);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                UI.clearBackstack(supportFragmentManager);
+            }
+        });
+
     }
 
     @Override
@@ -234,11 +265,87 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+    private void getAnswersForQuestion() {
+        if (question.getQuestionType() == QuestionType.ANSWER_SELECT) {
+            questionAnswer.setVisibility(View.VISIBLE);
+            tvQuestionAnswer.setText(question.getQuestion());
+            RetrofitManager.getInstance().getRetrofitService().getAnswers(question.id).enqueue(new Callback<List<QuestionAnswer>>() {
+                @Override
+                public void onResponse(Call<List<QuestionAnswer>> call, Response<List<QuestionAnswer>> response) {
+                    if (response.isSuccessful()) {
+                        opened = null;
+                        answerList = response.body();
+                        answerAdapter.updateAnswers(answerList);
+                        UI.popUpBackstack(supportFragmentManager);
+                    }else {
+                        Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                        UI.clearBackstack(supportFragmentManager);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<QuestionAnswer>> call, Throwable t) {
+                    Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                    UI.clearBackstack(supportFragmentManager);
+                }
+            });
+        } else if (question.getQuestionType() == QuestionType.IMAGE_SELECT) {
+            imageQuestionAnswer.setVisibility(View.VISIBLE);
+            tvImageQuestionAnswer.setText(question.getQuestion());
+            Picasso.with(context).load(Constants.BASE_URL + "/questionImage/getImage/" + question.id).into(ivImageQuestion);
+            RetrofitManager.getInstance().getRetrofitService().getAnswers(question.id).enqueue(new Callback<List<QuestionAnswer>>() {
+                @Override
+                public void onResponse(Call<List<QuestionAnswer>> call, Response<List<QuestionAnswer>> response) {
+                    if (response.isSuccessful()) {
+                        opened = null;
+                        answerList = response.body();
+                        answerAdapter.updateAnswers(answerList);
+                        UI.popUpBackstack(supportFragmentManager);
+                    }else {
+                        Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                        UI.clearBackstack(supportFragmentManager);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<QuestionAnswer>> call, Throwable t) {
+                    Toast.makeText(context, R.string.game_error, Toast.LENGTH_LONG).show();
+                    UI.clearBackstack(supportFragmentManager);
+                }
+            });
+        } else if (question.getQuestionType() == QuestionType.MULTIPLE_IMAGE_SELECT) {
+            questionImageAnswers.setVisibility(View.VISIBLE);
+            tvQuestionImageAnswer.setText(question.getQuestion());
+            RetrofitManager.getInstance().getRetrofitService().getImageAnswers(question.id).enqueue(new Callback<List<AnswerImage>>() {
+                @Override
+                public void onResponse(Call<List<AnswerImage>> call, Response<List<AnswerImage>> response) {
+                    if (response.isSuccessful()) {
+                        opened = null;
+                        answerImageList = response.body();
+                        imageAnswerAdapter.updateAnswers(answerImageList);
+                        UI.popUpBackstack(supportFragmentManager);
+                    }else {
+                        Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                        UI.clearBackstack(supportFragmentManager);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<AnswerImage>> call, Throwable t) {
+                    Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                    UI.clearBackstack(supportFragmentManager);
+                }
+            });
+        }
+
+    }
+
+
     private void saveImageAnswers() {
         answered = null;
-        if(imageAnswerAdapter.selectedItem!=-1){
+        if (imageAnswerAdapter.selectedItem != -1) {
             AnswerImage answerImage = answerImageList.get(imageAnswerAdapter.selectedItem);
-            if(question!=null && user!=null){
+            if (question != null && user != null) {
                 final UserQuestion userQuestion = new UserQuestion();
                 userQuestion.setUser(user);
                 userQuestion.setQuestion(question);
@@ -246,32 +353,41 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 userQuestion.setOpenedAt(opened);
                 userQuestion.setAnsweredAt(answered);
                 userQuestion.setWin(answerImage.isStatus());
-                if(answerImage.isStatus()){
+                if (answerImage.isStatus()) {
                     userQuestion.setPoints(user.getLevel().getXp());
-                }else {
+                    Toast.makeText(context, R.string.game_correct, Toast.LENGTH_SHORT).show();
+                } else {
                     userQuestion.setPoints(0);
+                    Toast.makeText(context, R.string.game_incorrect, Toast.LENGTH_SHORT).show();
                 }
                 RetrofitManager.getInstance().getRetrofitService().saveUserAnswer(userQuestion).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             numberQuestions--;
-                            points+=userQuestion.getPoints();
-                            if(numberQuestions>0){
-                                answerAdapter.selectedItem = -1;
-                                generateQuestionAnswer();
-                            }else if(numberQuestions==0){
+                            points += userQuestion.getPoints();
+                            if (numberQuestions > 0) {
+                                imageAnswerAdapter.selectedItem = -1;
+                                if (type.equals("game")) {
+                                    generateQuestionAnswer();
+                                } else if (type.equals("mini-game")) {
+                                    generateMiniGame();
+                                }
+                            } else if (numberQuestions == 0) {
                                 questionAnswer.setVisibility(View.GONE);
                                 imageQuestionAnswer.setVisibility(View.GONE);
                                 questionImageAnswers.setVisibility(View.GONE);
+                                startOfGame.setVisibility(View.GONE);
                                 endOfGame.setVisibility(View.VISIBLE);
-                                tvEnd.setText("Congratulations you finished the game!\n\nYou won "+ points+" points");
+                                tvEnd.setText(getString(R.string.game_win, points));
                             }
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(context,"Failed",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.game_error, Toast.LENGTH_LONG).show();
+                        UI.clearBackstack(supportFragmentManager);
                     }
                 });
             }
@@ -280,9 +396,9 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
 
     private void saveQuestionAnswer() {
         answered = null;
-        if(answerAdapter.selectedItem!=-1){
+        if (answerAdapter.selectedItem != -1) {
             QuestionAnswer answer = answerList.get(answerAdapter.selectedItem);
-            if(question!=null && user!=null){
+            if (question != null && user != null) {
                 final UserQuestion userQuestion = new UserQuestion();
                 userQuestion.setUser(user);
                 userQuestion.setQuestion(question);
@@ -290,32 +406,41 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 userQuestion.setOpenedAt(opened);
                 userQuestion.setAnsweredAt(answered);
                 userQuestion.setWin(answer.isStatus());
-                if(answer.isStatus()){
+                if (answer.isStatus()) {
                     userQuestion.setPoints(user.getLevel().getXp());
-                }else {
+                    Toast.makeText(context, R.string.game_correct, Toast.LENGTH_SHORT).show();
+                } else {
                     userQuestion.setPoints(0);
+                    Toast.makeText(context, R.string.game_incorrect, Toast.LENGTH_SHORT).show();
                 }
                 RetrofitManager.getInstance().getRetrofitService().saveUserAnswer(userQuestion).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             numberQuestions--;
-                            points+=userQuestion.getPoints();
-                            if(numberQuestions>0){
+                            points += userQuestion.getPoints();
+                            if (numberQuestions > 0) {
                                 answerAdapter.selectedItem = -1;
-                                generateQuestionAnswer();
-                            }else if(numberQuestions==0){
+                                if (type.equals("game")) {
+                                    generateQuestionAnswer();
+                                } else if (type.equals("mini-game")) {
+                                    generateMiniGame();
+                                }
+                            } else if (numberQuestions == 0) {
                                 questionAnswer.setVisibility(View.GONE);
                                 imageQuestionAnswer.setVisibility(View.GONE);
                                 questionImageAnswers.setVisibility(View.GONE);
+                                startOfGame.setVisibility(View.GONE);
                                 endOfGame.setVisibility(View.VISIBLE);
-                                tvEnd.setText("Congratulations you finished the game!\n\nYou won "+ points+" points");
+                                tvEnd.setText(getString(R.string.game_win, points));
                             }
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(context,"Failed",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.game_error, Toast.LENGTH_LONG).show();
+                        UI.clearBackstack(supportFragmentManager);
                     }
                 });
             }

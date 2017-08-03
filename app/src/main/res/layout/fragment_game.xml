@@ -3,14 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="?attr/actionBarSize">
+
+    <!--StartOfGame-->
+    <RelativeLayout
+        android:id="@+id/startOfGame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/tvStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvCountDown"
+                android:layout_below="@id/tvStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
 
     <!--EndOfGame-->
     <RelativeLayout
         android:id="@+id/endOfGame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -32,7 +63,7 @@
                 android:layout_below="@id/tvEnd"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="Go Back" />
+                android:text="@string/game_btn_go_back" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -40,8 +71,7 @@
     <RelativeLayout
         android:id="@+id/questionAnswer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tvQuestionAnswer"
@@ -49,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:textColor="#000"
-            android:textSize="15dp" />
+            android:textSize="16sp" />
 
         <!--Answers-->
         <android.support.v7.widget.RecyclerView
@@ -73,9 +103,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:padding="5dp"
-                android:text="Save answer" />
+                android:text="@string/game_btn_save_answer" />
         </LinearLayout>
 
 
@@ -85,31 +115,29 @@
     <RelativeLayout
         android:id="@+id/imageQuestionAnswer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/ivImageQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp" />
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tvImageQuestionAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivImageQuestion"
             android:layout_margin="20dp"
             android:textColor="#000"
-            android:textSize="15dp" />
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/ivImageQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="130dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tvImageQuestionAnswer" />
 
         <!--Answers-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvImageQuestionAnswers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvImageQuestionAnswer"
+            android:layout_below="@+id/ivImageQuestion"
             android:fadeScrollbars="false" />
 
         <LinearLayout
@@ -125,9 +153,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:padding="5dp"
-                android:text="Save answer" />
+                android:text="@string/game_btn_save_answer" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -143,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:textColor="#000"
-            android:textSize="15dp"/>
+            android:textSize="16sp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvQuestionImageAnswers"
@@ -164,9 +192,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:padding="5dp"
-                android:text="Save answer" />
+                android:text="@string/game_btn_save_answer" />
         </LinearLayout>
     </RelativeLayout>
 

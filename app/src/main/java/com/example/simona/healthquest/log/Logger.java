@@ -1,8 +1,5 @@
 package com.example.simona.healthquest.log;
 
-/**
- * Created by Risto Muchev on 02-May-16.
- */
 public class Logger {
 
     private static boolean enabled = true;

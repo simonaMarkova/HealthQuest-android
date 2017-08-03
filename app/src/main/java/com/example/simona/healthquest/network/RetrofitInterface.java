@@ -1,6 +1,7 @@
 package com.example.simona.healthquest.network;
 
 import com.example.simona.healthquest.model.AnswerImage;
+import com.example.simona.healthquest.model.Disease;
 import com.example.simona.healthquest.model.Level;
 import com.example.simona.healthquest.model.Question;
 import com.example.simona.healthquest.model.QuestionAnswer;
@@ -33,7 +34,7 @@ public interface RetrofitInterface {
     @GET("/question/random/{levelId}/{userId}")
     Call<Question> getRandomQuestion(@Path("levelId") Long levelId, @Path("userId") Long userId);
 
-    @GET("/user/{id}")
+    @GET("/user/find/{id}")
     Call<User> getUser(@Path("id")Long id);
 
     @GET("/questionAnswer/getByQuestion/{id}")
@@ -44,5 +45,11 @@ public interface RetrofitInterface {
 
     @GET("/answerImage/getByQuestion/{id}")
     Call<List<AnswerImage>> getImageAnswers(@Path("id") Long id);
+
+    @GET("/disease/random")
+    Call<Disease> getRandomDisease();
+
+    @GET("/question/disease/{diseaseId}/{userId}")
+    Call<Question> getDiseaseRandomQuestion(@Path("diseaseId") Long diseaseId, @Path("userId") Long userId);
 
 }

@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true">
+    android:clickable="true"
+    android:layout_marginTop="?attr/actionBarSize">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Email"/>
+                android:hint="@string/login_hint_email"/>
         </RelativeLayout>
 
         <!--Password-->
@@ -60,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="@string/login_hint_pass"/>
             <Button
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:drawableRight="@drawable/ic_visibility_off_black"
@@ -85,7 +86,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
-                android:text="Sign in" />
+                android:text="@string/login_btn_sign_in" />
 
 
             <Button
@@ -93,7 +94,7 @@
                 style="@style/ButtonStyle"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Facebook" />
+                android:text="@string/login_btn_facebook" />
 
 
         </LinearLayout>

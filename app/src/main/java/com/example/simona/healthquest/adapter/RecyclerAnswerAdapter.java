@@ -22,12 +22,12 @@ public class RecyclerAnswerAdapter extends RecyclerView.Adapter<RecyclerAnswerAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        private RadioButton questionAnswer;
+        private RadioButton rbQuestionAnswer;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            questionAnswer = (RadioButton) itemView.findViewById(R.id.questionAnswer);
+            rbQuestionAnswer = (RadioButton) itemView.findViewById(R.id.rbQuestionAnswer);
 
             View.OnClickListener clickListener = new View.OnClickListener() {
                 @Override
@@ -38,7 +38,7 @@ public class RecyclerAnswerAdapter extends RecyclerView.Adapter<RecyclerAnswerAd
             };
 
             itemView.setOnClickListener(clickListener);
-            questionAnswer.setOnClickListener(clickListener);
+            rbQuestionAnswer.setOnClickListener(clickListener);
         }
     }
 
@@ -52,8 +52,8 @@ public class RecyclerAnswerAdapter extends RecyclerView.Adapter<RecyclerAnswerAd
     @Override
     public void onBindViewHolder(RecyclerAnswerAdapter.MyViewHolder holder, int position) {
         QuestionAnswer questionAnswer = questionAnswerList.get(position);
-        holder.questionAnswer.setChecked(position == selectedItem);
-        holder.questionAnswer.setText(questionAnswer.getAnswer().getDescription().toString());
+        holder.rbQuestionAnswer.setChecked(position == selectedItem);
+        holder.rbQuestionAnswer.setText(questionAnswer.getAnswer().getDescription().toString());
     }
 
     @Override
