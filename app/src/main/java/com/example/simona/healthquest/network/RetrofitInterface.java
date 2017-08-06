@@ -37,6 +37,9 @@ public interface RetrofitInterface {
     @GET("/user/find/{id}")
     Call<User> getUser(@Path("id")Long id);
 
+    @GET("/user/find-all")
+    Call<List<User>> getAllUsers ();
+
     @GET("/questionAnswer/getByQuestion/{id}")
     Call<List<QuestionAnswer>> getAnswers(@Path("id") Long id);
 

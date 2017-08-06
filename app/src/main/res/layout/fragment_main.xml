@@ -51,7 +51,7 @@
             android:orientation="horizontal">
 
             <Button
-
+                android:id="@+id/btnRankList"
                 style="@style/ButtonStyle"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"

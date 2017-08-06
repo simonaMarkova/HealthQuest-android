@@ -158,7 +158,7 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     //TODO
                 } else {
-                    Toast.makeText(this, "The application won't work properly without this permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Оваа апликација нема да работи соодветно без оваа дозвола!", Toast.LENGTH_SHORT).show();
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
                 }
                 break;

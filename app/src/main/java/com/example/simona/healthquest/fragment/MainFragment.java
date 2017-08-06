@@ -27,6 +27,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
     private Button btnMainPlay;
     private Button btnMainMiniGame;
     private Button btnExit;
+    private Button btnRankList;
     private User user;
 
     @Override
@@ -46,6 +47,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
         btnExit.setOnClickListener(this);
         btnMainMiniGame = (Button) rootView.findViewById(R.id.btnMainMiniGame);
         btnMainMiniGame.setOnClickListener(this);
+        btnRankList = (Button) rootView.findViewById(R.id.btnRankList);
+        btnRankList.setOnClickListener(this);
         supportActionBar.setTitle(R.string.main_app_title);
 
         DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
@@ -79,6 +82,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
                 break;
             case R.id.btnExit:
                 exit();
+                break;
+            case R.id.btnRankList:
+                showRankList();
                 break;
 
         }
@@ -115,6 +121,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
 
     }
 
+    private void showRankList()
+    {
+        UI.replaceFragment(supportFragmentManager, R.id.container_layout, RankFragment.newInstance(), true, 0,0);
+    }
     private void openNewGame() {
         Bundle bundle = new Bundle();
         bundle.putString("type","game");

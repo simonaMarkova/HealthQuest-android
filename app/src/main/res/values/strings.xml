@@ -8,58 +8,58 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--activity-->
-    <string name="activity__alert_logout_title">Logout</string>
-    <string name="activity__alert_logout_body">Are sure you want to Logout?</string>
-    <string name="activity__alert_logout_btn">Logout</string>
+    <string name="activity__alert_logout_title">Одјава</string>
+    <string name="activity__alert_logout_body">Дали сте сигурни дека сакате да се одјавите?</string>
+    <string name="activity__alert_logout_btn">Одјава</string>
 
 
     <!--menu-->
-    <string name="menu_home">Home</string>
-    <string name="menu_profile">Profile</string>
-    <string name="menu_friends">Friends</string>
-    <string name="menu_notifications">Notifications</string>
-    <string name="menu_settings">Settings</string>
-    <string name="menu_logout">Logout</string>
+    <string name="menu_home">Почетна</string>
+    <string name="menu_profile">Профил</string>
+    <string name="menu_friends">Пријатели</string>
+    <string name="menu_notifications">Известувања</string>
+    <string name="menu_settings">Подесувања</string>
+    <string name="menu_logout">Одјава</string>
 
     <!--main fragment-->
     <string name="main_app_title">Health Quest</string>
-    <string name="main_exit_title">Exit</string>
+    <string name="main_exit_title">Излез</string>
     <string name="main_exit_desc">Are you sure you want to exit?</string>
-    <string name="main_exit_cancel">Cancel</string>
-    <string name="main_exit_ok">OK</string>
+    <string name="main_exit_cancel">Откажи</string>
+    <string name="main_exit_ok">Да</string>
 
     <!--main layout-->
-    <string name="main_btn_play">Play</string>
+    <string name="main_btn_play">Играј</string>
     <string name="main_btn_mini_game">Mini game</string>
-    <string name="main_btn_rankings">Rankings</string>
     <string name="main_btn_about">About</string>
+    <string name="main_btn_rankings">Ранг листа</string>
     <string name="main_btn_tutorial">Tutorial</string>
-    <string name="main_btn_exit">Exit</string>
+    <string name="main_btn_exit">Излез</string>
 
     <!--login fragment-->
-    <string name="login_invalid">Invalid email or password</string>
+    <string name="login_invalid">Неточна адреса или пасворд!</string>
     <string name="login_error">Something went wrong.\nTry again in a few minutes.</string>
 
     <!--login layout-->
     <string name="login_hint_email">Email</string>
     <string name="login_hint_pass">Password</string>
-    <string name="login_btn_sign_in">Sign in</string>
+    <string name="login_btn_sign_in">Најави се</string>
     <string name="login_btn_facebook">Facebook</string>
 
     <!--game layout-->
-    <string name="game_btn_save_answer">Save answer</string>
-    <string name="game_btn_go_back">Go back</string>
+    <string name="game_btn_save_answer">Зачувај</string>
+    <string name="game_btn_go_back">Назад</string>
 
     <!--game fragment-->
-    <string name="game_correct">Correct</string>
-    <string name="game_incorrect">Incorrect</string>
-    <string name="game_countdown">The game will start in:</string>
+    <string name="game_correct">Точен одговор</string>
+    <string name="game_incorrect">Неточен одговор</string>
+    <string name="game_countdown">Играта ќе започне за:</string>
     <string name="game_error">Something went wrong.\nTry again in a few minutes.</string>
-    <string name="game_win">You won:\n\n%1$d points</string>
+    <string name="game_win">Освоивте:\n\n%1$d поени</string>
 
     <!--profile layout-->
     <string name="profile_email">Email: </string>
-    <string name="profile_level">Level: </string>
-    <string name="profile_points">Points: </string>
+    <string name="profile_level">Ниво: </string>
+    <string name="profile_points">Поени: </string>
 
 </resources>
