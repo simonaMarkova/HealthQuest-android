@@ -34,6 +34,9 @@ public interface RetrofitInterface {
     @GET("/question/random/{levelId}/{userId}")
     Call<Question> getRandomQuestion(@Path("levelId") Long levelId, @Path("userId") Long userId);
 
+    @POST("/user/updateLevel/{userId}/{levelId}")
+    Call<User> updateLevelForUser(@Path ("userId") Long userId, @Path("levelId") Long levelId);
+
     @GET("/user/find/{id}")
     Call<User> getUser(@Path("id")Long id);
 

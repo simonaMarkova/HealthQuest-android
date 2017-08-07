@@ -22,6 +22,7 @@ import com.example.simona.healthquest.enumeration.QuestionType;
 import com.example.simona.healthquest.helper.JSON;
 import com.example.simona.healthquest.model.AnswerImage;
 import com.example.simona.healthquest.model.Disease;
+import com.example.simona.healthquest.model.Level;
 import com.example.simona.healthquest.model.Question;
 import com.example.simona.healthquest.model.QuestionAnswer;
 import com.example.simona.healthquest.model.QuestionImage;
@@ -62,6 +63,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvQuestionImageAnswer;
     private TextView tvCountDown;
     private TextView tvStart;
+    private TextView tvLevelUp;
     private Button btnGameSaveAnswer;
     private Button btnSaveImageQuestionAnswer;
     private Button btnGoBack;
@@ -99,6 +101,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         tvQuestionImageAnswer = (TextView) rootView.findViewById(R.id.tvQuestionImageAnswer);
         tvCountDown = (TextView) rootView.findViewById(R.id.tvCountDown);
         tvStart = (TextView) rootView.findViewById(R.id.tvStart);
+        tvLevelUp = (TextView) rootView.findViewById(R.id.tvLevelUp);
 
         rvQuestionAnswers = (RecyclerView) rootView.findViewById(R.id.rvQuestionAnswers);
         rvImageQuestionAnswers = (RecyclerView) rootView.findViewById(R.id.rvImageQuestionAnswers);
@@ -116,6 +119,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         questionAnswer = (RelativeLayout) rootView.findViewById(R.id.questionAnswer);
         imageQuestionAnswer = (RelativeLayout) rootView.findViewById(R.id.imageQuestionAnswer);
         questionImageAnswers = (RelativeLayout) rootView.findViewById(R.id.questionImageAnswers);
+
         endOfGame = (RelativeLayout) rootView.findViewById(R.id.endOfGame);
         startOfGame = (RelativeLayout) rootView.findViewById(R.id.startOfGame);
 
@@ -191,7 +195,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void generateMiniGame() {
-        UI.addFragment(supportFragmentManager, R.id.container_layout, ProgressBarFragment.newInstance(), true, 0, 0);
+        UI.addFragment(supportFragmentManager, R.id.container_layout, ProgressBarFragment.newInstance(), true,0,0);
         endOfGame.setVisibility(View.GONE);
         questionAnswer.setVisibility(View.GONE);
         imageQuestionAnswer.setVisibility(View.GONE);
@@ -378,8 +382,12 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                                 imageQuestionAnswer.setVisibility(View.GONE);
                                 questionImageAnswers.setVisibility(View.GONE);
                                 startOfGame.setVisibility(View.GONE);
-                                endOfGame.setVisibility(View.VISIBLE);
                                 tvEnd.setText(getString(R.string.game_win, points));
+                                if (points >= user.getLevel().getMaxPoints())
+                                {
+                                   updateLevelForUser();
+                                }
+                                endOfGame.setVisibility(View.VISIBLE);
                             }
                         }
                     }
@@ -393,6 +401,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
             }
         }
     }
+
 
     private void saveQuestionAnswer() {
         answered = null;
@@ -430,9 +439,13 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                                 questionAnswer.setVisibility(View.GONE);
                                 imageQuestionAnswer.setVisibility(View.GONE);
                                 questionImageAnswers.setVisibility(View.GONE);
-                                startOfGame.setVisibility(View.GONE);
                                 endOfGame.setVisibility(View.VISIBLE);
                                 tvEnd.setText(getString(R.string.game_win, points));
+                                if (points >= user.getLevel().getMaxPoints())
+                                {
+                                    updateLevelForUser();
+                                }
+                                startOfGame.setVisibility(View.GONE);
                             }
                         }
                     }
@@ -445,5 +458,28 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 });
             }
         }
+    }
+
+    private void updateLevelForUser() {
+        RetrofitManager.getInstance().getRetrofitService().updateLevelForUser(user.id, user.getLevel().id).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    user = response.body();
+                    Persistence.getInstance().getPersistence().setString(Persistence.KEY_USER, JSON.toJson(response.body(),User.class));
+                }else {
+                    Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                    UI.clearBackstack(supportFragmentManager);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                UI.clearBackstack(supportFragmentManager);
+            }
+        });
+
+        tvLevelUp.setText(getString(R.string.level_up, user.getLevel().getLevel()));
     }
 }

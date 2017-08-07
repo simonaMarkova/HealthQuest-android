@@ -12,6 +12,6 @@ public class PointsComparator implements Comparator<User>
 {
     public int compare(User o1, User o2)
     {
-        return o1.getPoints().compareTo(o2.getPoints());
+        return o2.getPoints().compareTo(o1.getPoints());
     }
 }

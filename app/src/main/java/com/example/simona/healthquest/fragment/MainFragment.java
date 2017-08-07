@@ -28,6 +28,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
     private Button btnMainMiniGame;
     private Button btnExit;
     private Button btnRankList;
+    private Button btnAbout;
+    private Button btnTutorial;
     private User user;
 
     @Override
@@ -49,6 +51,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
         btnMainMiniGame.setOnClickListener(this);
         btnRankList = (Button) rootView.findViewById(R.id.btnRankList);
         btnRankList.setOnClickListener(this);
+        btnAbout = (Button) rootView.findViewById(R.id.btnAbout);
+        btnAbout.setOnClickListener(this);
+        btnTutorial = (Button) rootView.findViewById(R.id.btnTutorial);
+        btnTutorial.setOnClickListener(this);
         supportActionBar.setTitle(R.string.main_app_title);
 
         DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
@@ -86,8 +92,22 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
             case R.id.btnRankList:
                 showRankList();
                 break;
+            case R.id.btnAbout:
+                showAbout();
+                break;
+            case R.id.btnTutorial:
+                showTutorial();
+                break;
 
         }
+    }
+
+    private void showTutorial() {
+        UI.replaceFragment(supportFragmentManager, R.id.container_layout, TutorialFragment.newInstance(), true, 0,0);
+    }
+
+    private void showAbout() {
+        UI.replaceFragment(supportFragmentManager, R.id.container_layout, AboutFragment.newInstance(), true, 0,0);
     }
 
     private void openNewMiniGame() {

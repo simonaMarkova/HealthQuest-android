@@ -55,7 +55,8 @@
     <string name="game_incorrect">Неточен одговор</string>
     <string name="game_countdown">Играта ќе започне за:</string>
     <string name="game_error">Something went wrong.\nTry again in a few minutes.</string>
-    <string name="game_win">Освоивте:\n\n%1$d поени</string>
+    <string name="game_win">Освоивте: %1$d поени</string>
+    <string name="level_up">Браво!\nГо достигнавте ниво:\n%1$d</string>
 
     <!--profile layout-->
     <string name="profile_email">Email: </string>
