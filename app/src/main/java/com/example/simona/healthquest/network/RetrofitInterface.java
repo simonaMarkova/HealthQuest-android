@@ -2,7 +2,9 @@ package com.example.simona.healthquest.network;
 
 import com.example.simona.healthquest.model.AnswerImage;
 import com.example.simona.healthquest.model.Disease;
+import com.example.simona.healthquest.model.FacebookLogin;
 import com.example.simona.healthquest.model.Level;
+import com.example.simona.healthquest.model.LoginInfo;
 import com.example.simona.healthquest.model.Question;
 import com.example.simona.healthquest.model.QuestionAnswer;
 import com.example.simona.healthquest.model.User;
@@ -57,5 +59,11 @@ public interface RetrofitInterface {
 
     @GET("/question/disease/{diseaseId}/{userId}")
     Call<Question> getDiseaseRandomQuestion(@Path("diseaseId") Long diseaseId, @Path("userId") Long userId);
+
+    @POST("/user/facebook/login")
+    Call<User> facebookLogin(@Body FacebookLogin facebookLogin);
+
+    @POST("/user/sign-in")
+    Call<User> login(@Body LoginInfo loginInfo);
 
 }

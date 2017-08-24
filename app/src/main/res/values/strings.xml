@@ -24,25 +24,25 @@
     <!--main fragment-->
     <string name="main_app_title">Health Quest</string>
     <string name="main_exit_title">Излез</string>
-    <string name="main_exit_desc">Are you sure you want to exit?</string>
+    <string name="main_exit_desc">Дали сте сигурни?</string>
     <string name="main_exit_cancel">Откажи</string>
     <string name="main_exit_ok">Да</string>
 
     <!--main layout-->
     <string name="main_btn_play">Играј</string>
-    <string name="main_btn_mini_game">Mini game</string>
-    <string name="main_btn_about">About</string>
+    <string name="main_btn_mini_game">Мини игра</string>
+    <string name="main_btn_about">За нас</string>
     <string name="main_btn_rankings">Ранг листа</string>
-    <string name="main_btn_tutorial">Tutorial</string>
+    <string name="main_btn_tutorial">Туториал</string>
     <string name="main_btn_exit">Излез</string>
 
     <!--login fragment-->
-    <string name="login_invalid">Неточна адреса или пасворд!</string>
-    <string name="login_error">Something went wrong.\nTry again in a few minutes.</string>
+    <string name="login_invalid">Неточен емиал или лозинка!</string>
+    <string name="login_error">Нешто не е во ред.\nОбидете се повторно..</string>
 
     <!--login layout-->
-    <string name="login_hint_email">Email</string>
-    <string name="login_hint_pass">Password</string>
+    <string name="login_hint_email">Емаил</string>
+    <string name="login_hint_pass">Лозинка</string>
     <string name="login_btn_sign_in">Најави се</string>
     <string name="login_btn_facebook">Facebook</string>
 
@@ -54,12 +54,12 @@
     <string name="game_correct">Точен одговор</string>
     <string name="game_incorrect">Неточен одговор</string>
     <string name="game_countdown">Играта ќе започне за:</string>
-    <string name="game_error">Something went wrong.\nTry again in a few minutes.</string>
+    <string name="game_error">Нешто не е во ред.\nОбидете се повторно.</string>
     <string name="game_win">Освоивте: %1$d поени</string>
     <string name="level_up">Браво!\nГо достигнавте ниво:\n%1$d</string>
 
     <!--profile layout-->
-    <string name="profile_email">Email: </string>
+    <string name="profile_email">Емаил: </string>
     <string name="profile_level">Ниво: </string>
     <string name="profile_points">Поени: </string>
 

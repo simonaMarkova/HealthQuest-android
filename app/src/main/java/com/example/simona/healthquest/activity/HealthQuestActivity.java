@@ -25,12 +25,16 @@ import com.example.simona.healthquest.fragment.BaseFragment;
 import com.example.simona.healthquest.fragment.LoginFragment;
 import com.example.simona.healthquest.fragment.MainFragment;
 import com.example.simona.healthquest.fragment.ProfileFragment;
+import com.example.simona.healthquest.helper.JSON;
 import com.example.simona.healthquest.log.LogCatLogger;
 import com.example.simona.healthquest.log.Logger;
 import com.example.simona.healthquest.model.User;
 import com.example.simona.healthquest.persistance.Persistence;
 import com.example.simona.healthquest.persistance.SharedPreferencesPersistence;
+import com.example.simona.healthquest.util.Constants;
 import com.example.simona.healthquest.util.UI;
+import com.facebook.login.LoginManager;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -116,7 +120,8 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
         final View header = navigationView.getHeaderView(0);
         TextView tvNavHeaderNameSurname = (TextView) header.findViewById(R.id.tvNavHeaderNameSurname);
         tvNavHeaderNameSurname.setText(user.getFirstName() + " " + user.getLastName());
-
+        ImageView navProfileImage = (ImageView) header.findViewById(R.id.navProfileImage);
+        Picasso.with(this).load(Constants.BASE_URL + "/user/photo/" + user.id).placeholder(R.drawable.brain_only).into(navProfileImage);
     }
 
     private void logout() {
@@ -138,6 +143,11 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
                 })
                 .setPositiveButton(R.string.activity__alert_logout_btn, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        User user = (User) JSON.fromJson(Persistence.getInstance().getPersistence().getString(Persistence.KEY_USER, ""), User.class);
+
+                        if(user.getFacebookAccount() != null && user.getFacebookAccount())
+                            LoginManager.getInstance().logOut();
+
                         Persistence.getInstance().getPersistence().removeValueForKey(Persistence.KEY_USER);
                         UI.clearBackstack(getSupportFragmentManager());
                         UI.replaceFragment(getSupportFragmentManager(), R.id.container_layout, LoginFragment.newInstance(), false, 0, 0);

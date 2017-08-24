@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusable="true"
@@ -9,74 +9,88 @@
     android:paddingBottom="10dp"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tvPosition"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
-        android:background="@color/colorPrimary"
-        android:paddingBottom="9dp"
-        android:paddingEnd="18dp"
-        android:paddingLeft="9dp"
-        android:paddingRight="9dp"
-        android:paddingStart="18dp"
-        android:paddingTop="9dp"
-        android:text="10"
-        android:textColor="#222"
-        android:textSize="18sp" />
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp">
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/tvPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="9dp"
+            android:paddingEnd="18dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="9dp"
+            android:paddingStart="18dp"
+            android:paddingTop="9dp"
+            android:text="10"
+            android:textColor="#222"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tvUsername"
+        <ImageView
+            android:id="@+id/ivRankUser"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="39dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginStart="39dp"
-        android:text="TextView"
-        android:layout_alignTop="@+id/tvPosition"
-        android:layout_toRightOf="@+id/tvPosition"
-        android:layout_toEndOf="@+id/tvPosition" />
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp">
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="TextView" />
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvUsername"
-        android:layout_alignStart="@+id/tvUsername"
-        android:layout_below="@+id/tvUsername"
-        android:paddingEnd="10dp"
-        android:paddingTop="5dp"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvUsername"
+            android:layout_alignStart="@+id/tvUsername"
+            android:layout_below="@+id/tvUsername"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="TextView" />
 
-    <TextView
-        android:id="@+id/tvLastname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingTop="5dp"
-        android:text="TextView"
-        android:layout_alignBaseline="@+id/tvName"
-        android:layout_alignBottom="@+id/tvName"
-        android:layout_toRightOf="@+id/tvName"
-        android:layout_toEndOf="@+id/tvName" />
+        <TextView
+            android:id="@+id/tvLastname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:text="TextView"
+            android:layout_alignBaseline="@+id/tvName"
+            android:layout_alignBottom="@+id/tvName"
+            android:layout_toRightOf="@+id/tvName"
+            android:layout_toEndOf="@+id/tvName" />
 
-    <TextView
-        android:id="@+id/tvPoints"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvLastname"
-        android:textColor="@color/colorPrimary"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/tvUsername"
-        android:paddingTop="2dp"
-        android:text="30"
-        android:textSize="30sp" />
+        <TextView
+            android:id="@+id/tvPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvLastname"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tvUsername"
+            android:paddingTop="2dp"
+            android:text="30"
+            android:textSize="30sp" />
+
+    </RelativeLayout>
 
 
-</RelativeLayout>
+
+
+</LinearLayout>

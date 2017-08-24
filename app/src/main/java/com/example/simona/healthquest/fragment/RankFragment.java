@@ -49,7 +49,7 @@ public class RankFragment extends BaseFragment{
         rootView = inflater.inflate(R.layout.fragment_rank_list, container, false);
         rvUsersRanking = (RecyclerView) rootView.findViewById(R.id.rvUsersRanking);
         users = new ArrayList<>();
-        usersAdapter = new RecyclerUsersAdapter(users);
+        usersAdapter = new RecyclerUsersAdapter(users, context);
         RecyclerView.LayoutManager layoutManager =  new LinearLayoutManager(context);
         rvUsersRanking.setLayoutManager(layoutManager);
         rvUsersRanking.setAdapter(usersAdapter);

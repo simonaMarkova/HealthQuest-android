@@ -14,7 +14,9 @@ import com.example.simona.healthquest.helper.JSON;
 import com.example.simona.healthquest.model.User;
 import com.example.simona.healthquest.network.RetrofitManager;
 import com.example.simona.healthquest.persistance.Persistence;
+import com.example.simona.healthquest.util.Constants;
 import com.example.simona.healthquest.util.UI;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +60,8 @@ public class ProfileFragment extends BaseFragment {
                     userProfileEmail.setText(user.getEmail());
                     userProfileLevel.setText(Integer.toString(user.getLevel().getLevel()));
                     userProfilePoints.setText(Integer.toString(user.getPoints()));
+                    Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).placeholder(R.drawable.brain_only).into(userProfileImage);
+
 
                 } else {
                     Toast.makeText(context,  R.string.login_error, Toast.LENGTH_LONG).show();

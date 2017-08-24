@@ -12,6 +12,9 @@ public class User extends BaseEntity {
     private String lastName;
     private Integer points;
     private Level level;
+    private String profileImage;
+    Boolean facebookAccount;
+
 
     public String getUsername() {
         return username;
@@ -67,5 +70,21 @@ public class User extends BaseEntity {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public Boolean getFacebookAccount() {
+        return facebookAccount;
+    }
+
+    public void setFacebookAccount(Boolean facebookAccount) {
+        this.facebookAccount = facebookAccount;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }

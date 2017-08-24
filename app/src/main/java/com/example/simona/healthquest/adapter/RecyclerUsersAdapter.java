@@ -1,15 +1,19 @@
 package com.example.simona.healthquest.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.simona.healthquest.R;
 import com.example.simona.healthquest.model.User;
+import com.example.simona.healthquest.util.Constants;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -23,6 +27,7 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
 
 
     private List<User> users;
+    private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
@@ -31,6 +36,7 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
         public TextView tvLastname;
         public TextView tvPoints;
         public TextView tvPosition;
+        ImageView ivRankUser;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -40,6 +46,7 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
             tvLastname = (TextView) itemView.findViewById(R.id.tvLastname);
             tvPoints = (TextView) itemView.findViewById(R.id.tvPoints);
             tvPosition = (TextView) itemView.findViewById(R.id.tvPosition);
+            ivRankUser = (ImageView) itemView.findViewById(R.id.ivRankUser);
 
         }
     }
@@ -60,6 +67,8 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
         holder.tvName.setText(user.getFirstName());
         holder.tvLastname.setText(user.getLastName());
         holder.tvPoints.setText(user.getPoints().toString());
+        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).placeholder(R.drawable.brain_only).into(holder.ivRankUser);
+
     }
 
     @Override
@@ -72,8 +81,9 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
         notifyDataSetChanged();
     }
 
-    public RecyclerUsersAdapter(List<User> users){
+    public RecyclerUsersAdapter(List<User> users, Context context){
         this.users = users;
+        this.context = context;
     }
 
 }
