@@ -27,8 +27,8 @@ public interface RetrofitInterface {
     @GET("/level/")
     Call<List<Level>> getLevels();
 
-    @POST("/user/")
-    Call<Void> registerUser(@Body User user);
+    @POST("/user/register/")
+    Call<User> registerUser(@Body User user);
 
     @GET("/level/{id}")
     Call<Level> getLevel(@Path("id") Long id);

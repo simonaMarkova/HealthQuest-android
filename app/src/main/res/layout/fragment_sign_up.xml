@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
     android:orientation="vertical"
     android:clickable="true">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        app:srcCompat="@drawable/brain_only" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Name"
+                android:hint="Име"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -31,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Surname"
+                android:hint="Презиме"
                 android:inputType="textEmailAddress" />
 
         </LinearLayout>
@@ -40,20 +47,20 @@
             android:id="@+id/etSignUpEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="Емаил"
             android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/etSignUpUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"/>
+            android:hint="Корисничко име"/>
 
         <EditText
             android:id="@+id/etSignUpPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="Лозинка"
             android:inputType="textPassword" />
 
 
@@ -65,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:text="Register" />
+            android:text="Зачувај" />
     </LinearLayout>
 
 

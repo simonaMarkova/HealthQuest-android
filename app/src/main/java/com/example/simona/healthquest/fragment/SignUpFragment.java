@@ -10,6 +10,8 @@ package com.example.simona.healthquest.fragment;
         import android.widget.Toast;
 
         import com.example.simona.healthquest.R;
+        import com.example.simona.healthquest.helper.JSON;
+        import com.example.simona.healthquest.persistance.Persistence;
         import com.example.simona.healthquest.util.UI;
         import com.example.simona.healthquest.model.Level;
         import com.example.simona.healthquest.model.User;
@@ -74,38 +76,30 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         user.setPassword(etSignUpPassword.getText().toString());
         user.setPoints(0);
 
-        RetrofitManager.getInstance().getRetrofitService().getLevel((long) 1).enqueue(new Callback<Level>() {
+        RetrofitManager.getInstance().getRetrofitService().registerUser(user).enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<Level> call, Response<Level> response) {
-                if(response.isSuccessful()){
-                    level = response.body();
-                    user.setLevel(level);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Level> call, Throwable t) {
-
-            }
-        });
-
-        RetrofitManager.getInstance().getRetrofitService().registerUser(user).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
+                    Persistence.getInstance().getPersistence().setString(Persistence.KEY_USER, JSON.toJson(response.body(),User.class));
                     supportFragmentManager.popBackStack();
                     UI.replaceFragment(supportFragmentManager, R.id.container_layout, MainFragment.newInstance(), false, 0, 0);
 
                 } else {
-                    Toast.makeText(context, "No success", Toast.LENGTH_LONG).show();
+                    if (response.code() == 409)
+                    {
+                        Toast.makeText(context, "Корисничкото име е зафатено!", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    Toast.makeText(context, "Неуспешна регистрација!", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show();
             }
         });
+
     }
 
 }

@@ -59,12 +59,13 @@ import retrofit2.Response;
 
 public class LoginFragment extends BaseFragment implements View.OnClickListener {
     private View rootView;
-    private EditText etLoginEmail;
+    private EditText etLoginUsername;
     private EditText etLoginPassword;
     private Button loginSignInBtn;
     private Button btnFacebook;
     private Button btnVisiblePassword;
     private LoginButton loginButton;
+    private Button btnSighUp;
     private CallbackManager callbackManager = null;
     private String fbToken;
     ImageView image;
@@ -83,8 +84,10 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         loginSignInBtn = (Button) rootView.findViewById(R.id.loginSignInBtn);
         loginSignInBtn.setOnClickListener(this);
         btnFacebook = (Button) rootView.findViewById(R.id.btnFacebook);
+        btnSighUp = (Button) rootView.findViewById(R.id.btnSighUp);
+        btnSighUp.setOnClickListener(this);
 
-        etLoginEmail = (EditText) rootView.findViewById(R.id.etLoginEmail);
+        etLoginUsername = (EditText) rootView.findViewById(R.id.etLoginUsername);
         etLoginPassword = (EditText) rootView.findViewById(R.id.etLoginPassword);
         btnVisiblePassword = (Button) rootView.findViewById(R.id.btnVisiblePassword);
 
@@ -101,7 +104,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                     case MotionEvent.ACTION_UP:
                         etLoginPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
                         btnVisiblePassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_off_black, 0);
-                        etLoginPassword.setTypeface(etLoginEmail.getTypeface());
+                        etLoginPassword.setTypeface(etLoginUsername.getTypeface());
                         break;
                 }
                 return true;
@@ -222,13 +225,20 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
             case R.id.loginSignInBtn:
                 login();
                 break;
+            case R.id.btnSighUp:
+                signUp();
+                break;
         }
     }
 
+    private void signUp()
+    {
+        UI.replaceFragment(supportFragmentManager, R.id.container_layout, SignUpFragment.newInstance(), true, 0,0);
+    }
     private void login() {
-        if (Validate.getInstance().validateEmail(etLoginEmail.getText().toString()) && Validate.getInstance().validatePassword(etLoginPassword.getText().toString())) {
+        if (Validate.getInstance().validatePassword(etLoginPassword.getText().toString())) {
             LoginInfo loginInfo = new LoginInfo();
-            loginInfo.setEmail(etLoginEmail.getText().toString());
+            loginInfo.setUsername(etLoginUsername.getText().toString());
             loginInfo.setPassword(etLoginPassword.getText().toString());
             RetrofitManager.getInstance().getRetrofitService().login(loginInfo).enqueue(new Callback<User>() {
                 @Override

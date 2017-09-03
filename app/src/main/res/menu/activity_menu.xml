@@ -13,15 +13,18 @@
         <item
             android:id="@+id/nav_friends"
             android:icon="@drawable/ic_group_black"
-            android:title="@string/menu_friends" />
+            android:title="@string/menu_friends"
+            android:visible="false" />
         <item
             android:id="@+id/nav_notifications"
             android:icon="@drawable/ic_notifications_black"
-            android:title="@string/menu_notifications" />
+            android:title="@string/menu_notifications"
+            android:visible="false" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_black"
-            android:title="@string/menu_settings" />
+            android:title="@string/menu_settings"
+            android:visible="false" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_keyboard_backspace_black"

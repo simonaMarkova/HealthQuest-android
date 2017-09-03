@@ -41,7 +41,7 @@
     <string name="login_error">Нешто не е во ред.\nОбидете се повторно..</string>
 
     <!--login layout-->
-    <string name="login_hint_email">Емаил</string>
+    <string name="login_hint_username">Корисничко име</string>
     <string name="login_hint_pass">Лозинка</string>
     <string name="login_btn_sign_in">Најави се</string>
     <string name="login_btn_facebook">Facebook</string>
