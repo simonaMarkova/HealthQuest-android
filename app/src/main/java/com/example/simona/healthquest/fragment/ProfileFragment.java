@@ -30,7 +30,7 @@ public class ProfileFragment extends BaseFragment {
     private View rootView;
     private ImageView userProfileImage;
     private TextView userProfileName;
-    private TextView userProfileEmail;
+    private TextView userProfileUsername;
     private TextView userProfileLevel;
     private TextView userProfilePoints;
     private User user;
@@ -46,7 +46,7 @@ public class ProfileFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_profile,container,false);
         userProfileImage = (ImageView) rootView.findViewById(R.id.userProfileImage);
         userProfileName = (TextView) rootView.findViewById(R.id.userProfileName);
-        userProfileEmail = (TextView) rootView.findViewById(R.id.userProfileEmail);
+        userProfileUsername = (TextView) rootView.findViewById(R.id.userProfileUsername);
         userProfileLevel = (TextView) rootView.findViewById(R.id.userProfileLevel);
         userProfilePoints = (TextView) rootView.findViewById(R.id.userProfilePoints);
 
@@ -57,7 +57,7 @@ public class ProfileFragment extends BaseFragment {
                 if (response.isSuccessful()) {
                     Persistence.getInstance().getPersistence().setString(Persistence.KEY_USER, JSON.toJson(response.body(),User.class));
                     userProfileName.setText(user.getFirstName() + " " + user.getLastName());
-                    userProfileEmail.setText(user.getEmail());
+                    userProfileUsername.setText(user.getUsername());
                     userProfileLevel.setText(Integer.toString(user.getLevel().getLevel()));
                     userProfilePoints.setText(Integer.toString(user.getPoints()));
                     Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).placeholder(R.drawable.brain_only).into(userProfileImage);

@@ -59,7 +59,7 @@
     <string name="level_up">Браво!\nГо достигнавте ниво:\n%1$d</string>
 
     <!--profile layout-->
-    <string name="profile_email">Емаил: </string>
+    <string name="profile_username">Корисничко име: </string>
     <string name="profile_level">Ниво: </string>
     <string name="profile_points">Поени: </string>
 

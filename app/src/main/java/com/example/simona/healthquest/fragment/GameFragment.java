@@ -80,6 +80,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private Date answered;
     private int numberQuestions;
     private int points;
+    private int pointsForMiniGame;
     private String type;
     private CountDownTimer timer;
 
@@ -144,6 +145,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
 
         numberQuestions = 5;
         points = 0;
+        pointsForMiniGame = 0;
 
         endOfGame.setVisibility(View.GONE);
         questionAnswer.setVisibility(View.GONE);
@@ -358,10 +360,24 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 userQuestion.setAnsweredAt(answered);
                 userQuestion.setWin(answerImage.isStatus());
                 if (answerImage.isStatus()) {
-                    userQuestion.setPoints(user.getLevel().getXp());
+                    if (type.equals("game"))
+                    {
+                        userQuestion.setPoints(user.getLevel().getXp());
+                    }
+                    else if(type.equals("mini-game"))
+                    {
+                        pointsForMiniGame+=user.getLevel().getXp();
+                    }
                     Toast.makeText(context, R.string.game_correct, Toast.LENGTH_SHORT).show();
                 } else {
-                    userQuestion.setPoints(0);
+                    if(type.equals("game"))
+                    {
+                        userQuestion.setPoints(0);
+                    }
+                    else if(type.equals("mini-game"))
+                    {
+                        pointsForMiniGame+=0;
+                    }
                     Toast.makeText(context, R.string.game_incorrect, Toast.LENGTH_SHORT).show();
                 }
                 RetrofitManager.getInstance().getRetrofitService().saveUserAnswer(userQuestion).enqueue(new Callback<Void>() {
@@ -382,8 +398,12 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                                 imageQuestionAnswer.setVisibility(View.GONE);
                                 questionImageAnswers.setVisibility(View.GONE);
                                 startOfGame.setVisibility(View.GONE);
-                                tvEnd.setText(getString(R.string.game_win, points));
-                                if (points >= user.getLevel().getMaxPoints())
+                                if (type.equals("game")) {
+                                    tvEnd.setText(getString(R.string.game_win, points));
+                                } else if (type.equals("mini-game")) {
+                                    tvEnd.setText(getString(R.string.game_win, pointsForMiniGame));
+                                }
+                                if (points >= user.getLevel().getMaxPoints() && type.equals("game"))
                                 {
                                    updateLevelForUser();
                                 }
@@ -416,10 +436,24 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 userQuestion.setAnsweredAt(answered);
                 userQuestion.setWin(answer.isStatus());
                 if (answer.isStatus()) {
-                    userQuestion.setPoints(user.getLevel().getXp());
+                    if (type.equals("game"))
+                    {
+                        userQuestion.setPoints(user.getLevel().getXp());
+                    }
+                    else if(type.equals("mini-game"))
+                    {
+                        pointsForMiniGame+=user.getLevel().getXp();
+                    }
                     Toast.makeText(context, R.string.game_correct, Toast.LENGTH_SHORT).show();
                 } else {
-                    userQuestion.setPoints(0);
+                    if(type.equals("game"))
+                    {
+                        userQuestion.setPoints(0);
+                    }
+                    else if(type.equals("mini-game"))
+                    {
+                        pointsForMiniGame+=0;
+                    }
                     Toast.makeText(context, R.string.game_incorrect, Toast.LENGTH_SHORT).show();
                 }
                 RetrofitManager.getInstance().getRetrofitService().saveUserAnswer(userQuestion).enqueue(new Callback<Void>() {
@@ -440,8 +474,12 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                                 imageQuestionAnswer.setVisibility(View.GONE);
                                 questionImageAnswers.setVisibility(View.GONE);
                                 endOfGame.setVisibility(View.VISIBLE);
-                                tvEnd.setText(getString(R.string.game_win, points));
-                                if (points >= user.getLevel().getMaxPoints())
+                                if (type.equals("game")) {
+                                    tvEnd.setText(getString(R.string.game_win, points));
+                                } else if (type.equals("mini-game")) {
+                                    tvEnd.setText(getString(R.string.game_win, pointsForMiniGame));
+                                }
+                                if (points >= user.getLevel().getMaxPoints() && type.equals("game"))
                                 {
                                     updateLevelForUser();
                                 }
@@ -467,6 +505,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 if (response.isSuccessful()) {
                     user = response.body();
                     Persistence.getInstance().getPersistence().setString(Persistence.KEY_USER, JSON.toJson(response.body(),User.class));
+                    tvLevelUp.setText(getString(R.string.level_up, user.getLevel().getLevel()));
                 }else {
                     Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
                     UI.clearBackstack(supportFragmentManager);
@@ -479,7 +518,5 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 UI.clearBackstack(supportFragmentManager);
             }
         });
-
-        tvLevelUp.setText(getString(R.string.level_up, user.getLevel().getLevel()));
     }
 }

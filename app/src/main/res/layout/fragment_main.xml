@@ -23,21 +23,21 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btnMainPlay"
                 style="@style/ButtonStyle"
-                android:layout_width="150dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:text="@string/main_btn_play" />
 
             <Button
                 android:id="@+id/btnMainMiniGame"
                 style="@style/ButtonStyle"
-                android:layout_width="150dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="@string/main_btn_mini_game" />
         </LinearLayout>
 
@@ -75,14 +75,16 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:text="@string/main_btn_about" />
+                android:text="@string/main_btn_about"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnTutorial"
                 style="@style/ButtonStyle"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="@string/main_btn_tutorial" />
+                android:text="@string/main_btn_tutorial"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,7 +101,8 @@
                 style="@style/ButtonStyle"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:text="@string/main_btn_exit" />
+                android:text="@string/main_btn_exit"
+                android:visibility="gone" />
 
 
         </LinearLayout>
