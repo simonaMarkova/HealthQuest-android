@@ -2,12 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:orientation="vertical"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:textColor="#fff"
+            android:textSize="30sp"/>
+    </RelativeLayout>
 
     <!--StartOfGame-->
     <RelativeLayout
+        android:background="#fff"
         android:id="@+id/startOfGame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -39,6 +53,7 @@
 
     <!--EndOfGame-->
     <RelativeLayout
+        android:background="#fff"
         android:id="@+id/endOfGame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -84,6 +99,7 @@
 
     <!--QuestionAnswer-->
     <RelativeLayout
+        android:background="#fff"
         android:id="@+id/questionAnswer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -103,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvQuestionAnswer"
             android:fadeScrollbars="false" />
+
 
 
         <LinearLayout
@@ -128,6 +145,7 @@
 
     <!--ImageQuestionAnswer-->
     <RelativeLayout
+        android:background="#fff"
         android:id="@+id/imageQuestionAnswer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -176,6 +194,7 @@
 
     <!--QuestionImageAnswer-->
     <RelativeLayout
+        android:background="#fff"
         android:id="@+id/questionImageAnswers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

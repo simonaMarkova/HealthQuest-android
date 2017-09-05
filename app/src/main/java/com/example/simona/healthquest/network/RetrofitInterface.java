@@ -63,7 +63,7 @@ public interface RetrofitInterface {
     @POST("/user/facebook/login")
     Call<User> facebookLogin(@Body FacebookLogin facebookLogin);
 
-    @POST("/user/sign-in")
+    @POST("/user/login")
     Call<User> login(@Body LoginInfo loginInfo);
 
 }

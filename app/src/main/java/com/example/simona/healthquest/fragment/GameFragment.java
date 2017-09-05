@@ -3,6 +3,7 @@ package com.example.simona.healthquest.fragment;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,8 @@ import com.example.simona.healthquest.persistance.Persistence;
 import com.example.simona.healthquest.util.Constants;
 import com.example.simona.healthquest.util.UI;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,6 +86,8 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private int pointsForMiniGame;
     private String type;
     private CountDownTimer timer;
+    private CountDownTimer answerTimer;
+    private TextView tvTimer;
 
 
     @Override
@@ -95,6 +100,10 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_game, container, false);
 
+        DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        toolbar.setVisibility(View.GONE);
+
         user = (User) JSON.fromJson(Persistence.getString(Persistence.KEY_USER,""),User.class);
         tvQuestionAnswer = (TextView) rootView.findViewById(R.id.tvQuestionAnswer);
         tvEnd = (TextView) rootView.findViewById(R.id.tvEnd);
@@ -103,6 +112,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         tvCountDown = (TextView) rootView.findViewById(R.id.tvCountDown);
         tvStart = (TextView) rootView.findViewById(R.id.tvStart);
         tvLevelUp = (TextView) rootView.findViewById(R.id.tvLevelUp);
+        tvTimer = (TextView) rootView.findViewById(R.id.tvTimer);
 
         rvQuestionAnswers = (RecyclerView) rootView.findViewById(R.id.rvQuestionAnswers);
         rvImageQuestionAnswers = (RecyclerView) rootView.findViewById(R.id.rvImageQuestionAnswers);
@@ -153,7 +163,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         questionImageAnswers.setVisibility(View.GONE);
         startOfGame.setVisibility(View.VISIBLE);
         tvStart.setText(R.string.game_countdown);
-        timer = new CountDownTimer(10000, 1000) {
+        timer = new CountDownTimer(6000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 tvCountDown.setText(Integer.toString((int)millisUntilFinished/1000));
@@ -225,6 +235,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void generateQuestionAnswer() {
+
         UI.addFragment(supportFragmentManager, R.id.container_layout, ProgressBarFragment.newInstance(), true, 0, 0);
         endOfGame.setVisibility(View.GONE);
         questionAnswer.setVisibility(View.GONE);
@@ -257,21 +268,45 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnGameSaveAnswer:
-                saveQuestionAnswer();
+                if(answerAdapter.selectedItem != -1)
+                    saveQuestionAnswer();
                 break;
             case R.id.btnSaveImageQuestionAnswer:
-                saveQuestionAnswer();
+                if(answerAdapter.selectedItem != -1)
+                    saveQuestionAnswer();
                 break;
             case R.id.btnGoBack:
+                DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                toolbar.setVisibility(View.VISIBLE);
                 supportFragmentManager.popBackStack();
                 break;
             case R.id.btnSaveQuestionImageAnswer:
-                saveImageAnswers();
+                if(imageAnswerAdapter.selectedItem != -1)
+                    saveImageAnswers();
                 break;
         }
     }
 
     private void getAnswersForQuestion() {
+
+        answerTimer = new CountDownTimer(16000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                tvTimer.setText(Integer.toString((int) millisUntilFinished / 1000));
+            }
+
+            public void onFinish() {
+                if (question.getQuestionType() == QuestionType.ANSWER_SELECT){
+                    saveQuestionAnswer();
+                }else if (question.getQuestionType() == QuestionType.IMAGE_SELECT){
+                    saveQuestionAnswer();
+                }else if(question.getQuestionType() == QuestionType.MULTIPLE_IMAGE_SELECT){
+                    saveImageAnswers();
+                }
+            }
+        };
+
         if (question.getQuestionType() == QuestionType.ANSWER_SELECT) {
             questionAnswer.setVisibility(View.VISIBLE);
             tvQuestionAnswer.setText(question.getQuestion());
@@ -283,6 +318,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                         answerList = response.body();
                         answerAdapter.updateAnswers(answerList);
                         UI.popUpBackstack(supportFragmentManager);
+                        answerTimer.start();
                     }else {
                         Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
                         UI.clearBackstack(supportFragmentManager);
@@ -307,6 +343,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                         answerList = response.body();
                         answerAdapter.updateAnswers(answerList);
                         UI.popUpBackstack(supportFragmentManager);
+                        answerTimer.start();
                     }else {
                         Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
                         UI.clearBackstack(supportFragmentManager);
@@ -330,6 +367,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                         answerImageList = response.body();
                         imageAnswerAdapter.updateAnswers(answerImageList);
                         UI.popUpBackstack(supportFragmentManager);
+                        answerTimer.start();
                     }else {
                         Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
                         UI.clearBackstack(supportFragmentManager);
@@ -350,6 +388,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private void saveImageAnswers() {
         answered = null;
         if (imageAnswerAdapter.selectedItem != -1) {
+            answerTimer.cancel();
             AnswerImage answerImage = answerImageList.get(imageAnswerAdapter.selectedItem);
             if (question != null && user != null) {
                 final UserQuestion userQuestion = new UserQuestion();
@@ -407,6 +446,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                                 {
                                    updateLevelForUser();
                                 }
+                                tvTimer.setText("");
                                 endOfGame.setVisibility(View.VISIBLE);
                             }
                         }
@@ -419,6 +459,55 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                     }
                 });
             }
+        } else {
+            final UserQuestion userQuestion = new UserQuestion();
+            userQuestion.setUser(user);
+            userQuestion.setQuestion(question);
+            userQuestion.setAnswerImage(null);
+            userQuestion.setOpenedAt(opened);
+            userQuestion.setAnsweredAt(answered);
+            userQuestion.setWin(false);
+            userQuestion.setPoints(0);
+
+            RetrofitManager.getInstance().getRetrofitService().saveUserAnswer(userQuestion).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        numberQuestions--;
+                        points += userQuestion.getPoints();
+                        if (numberQuestions > 0) {
+                            imageAnswerAdapter.selectedItem = -1;
+                            if (type.equals("game")) {
+                                generateQuestionAnswer();
+                            } else if (type.equals("mini-game")) {
+                                generateMiniGame();
+                            }
+                        } else if (numberQuestions == 0) {
+                            questionAnswer.setVisibility(View.GONE);
+                            imageQuestionAnswer.setVisibility(View.GONE);
+                            questionImageAnswers.setVisibility(View.GONE);
+                            startOfGame.setVisibility(View.GONE);
+                            if (type.equals("game")) {
+                                tvEnd.setText(getString(R.string.game_win, points));
+                            } else if (type.equals("mini-game")) {
+                                tvEnd.setText(getString(R.string.game_win, pointsForMiniGame));
+                            }
+                            if (points >= user.getLevel().getMaxPoints() && type.equals("game"))
+                            {
+                                updateLevelForUser();
+                            }
+                            tvTimer.setText("");
+                            endOfGame.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Toast.makeText(context, R.string.game_error, Toast.LENGTH_LONG).show();
+                    UI.clearBackstack(supportFragmentManager);
+                }
+            });
         }
     }
 
@@ -426,6 +515,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private void saveQuestionAnswer() {
         answered = null;
         if (answerAdapter.selectedItem != -1) {
+            answerTimer.cancel();
             QuestionAnswer answer = answerList.get(answerAdapter.selectedItem);
             if (question != null && user != null) {
                 final UserQuestion userQuestion = new UserQuestion();
@@ -473,6 +563,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                                 questionAnswer.setVisibility(View.GONE);
                                 imageQuestionAnswer.setVisibility(View.GONE);
                                 questionImageAnswers.setVisibility(View.GONE);
+                                tvTimer.setText("");
                                 endOfGame.setVisibility(View.VISIBLE);
                                 if (type.equals("game")) {
                                     tvEnd.setText(getString(R.string.game_win, points));
@@ -495,6 +586,55 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                     }
                 });
             }
+        } else {
+            final UserQuestion userQuestion = new UserQuestion();
+            userQuestion.setUser(user);
+            userQuestion.setQuestion(question);
+            userQuestion.setQuestionAnswer(null);
+            userQuestion.setOpenedAt(opened);
+            userQuestion.setAnsweredAt(answered);
+            userQuestion.setWin(false);
+            userQuestion.setPoints(0);
+
+            RetrofitManager.getInstance().getRetrofitService().saveUserAnswer(userQuestion).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        numberQuestions--;
+                        points += userQuestion.getPoints();
+                        if (numberQuestions > 0) {
+                            answerAdapter.selectedItem = -1;
+                            if (type.equals("game")) {
+                                generateQuestionAnswer();
+                            } else if (type.equals("mini-game")) {
+                                generateMiniGame();
+                            }
+                        } else if (numberQuestions == 0) {
+                            questionAnswer.setVisibility(View.GONE);
+                            imageQuestionAnswer.setVisibility(View.GONE);
+                            questionImageAnswers.setVisibility(View.GONE);
+                            tvTimer.setText("");
+                            endOfGame.setVisibility(View.VISIBLE);
+                            if (type.equals("game")) {
+                                tvEnd.setText(getString(R.string.game_win, points));
+                            } else if (type.equals("mini-game")) {
+                                tvEnd.setText(getString(R.string.game_win, pointsForMiniGame));
+                            }
+                            if (points >= user.getLevel().getMaxPoints() && type.equals("game"))
+                            {
+                                updateLevelForUser();
+                            }
+                            startOfGame.setVisibility(View.GONE);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Toast.makeText(context, R.string.game_error, Toast.LENGTH_LONG).show();
+                    UI.clearBackstack(supportFragmentManager);
+                }
+            });
         }
     }
 
@@ -518,5 +658,16 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 UI.clearBackstack(supportFragmentManager);
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(timer != null){
+            timer.cancel();
+        }
+        if(answerTimer != null) {
+            answerTimer.cancel();
+        }
     }
 }

@@ -28,7 +28,6 @@
             android:paddingRight="9dp"
             android:paddingStart="18dp"
             android:paddingTop="9dp"
-            android:text="10"
             android:textColor="#222"
             android:textSize="18sp" />
 
@@ -49,8 +48,7 @@
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="TextView" />
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/tvName"
@@ -60,32 +58,19 @@
             android:layout_alignStart="@+id/tvUsername"
             android:layout_below="@+id/tvUsername"
             android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:text="TextView" />
+            android:paddingTop="5dp" />
 
-        <TextView
-            android:id="@+id/tvLastname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:text="TextView"
-            android:layout_alignBaseline="@+id/tvName"
-            android:layout_alignBottom="@+id/tvName"
-            android:layout_toRightOf="@+id/tvName"
-            android:layout_toEndOf="@+id/tvName" />
 
         <TextView
             android:id="@+id/tvPoints"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tvLastname"
+            android:layout_alignBottom="@+id/tvName"
             android:textColor="@color/colorPrimary"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/tvUsername"
             android:paddingTop="2dp"
-            android:text="30"
             android:textSize="30sp" />
 
     </RelativeLayout>

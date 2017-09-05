@@ -51,6 +51,12 @@ public class ProfileFragment extends BaseFragment {
         userProfilePoints = (TextView) rootView.findViewById(R.id.userProfilePoints);
 
         user = (User) JSON.fromJson(Persistence.getInstance().getPersistence().getString(Persistence.KEY_USER, ""),User.class);
+
+        setProfileInfo();
+        return rootView;
+    }
+
+    public void setProfileInfo(){
         RetrofitManager.getInstance().getRetrofitService().getUser(user.id).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -61,8 +67,6 @@ public class ProfileFragment extends BaseFragment {
                     userProfileLevel.setText(Integer.toString(user.getLevel().getLevel()));
                     userProfilePoints.setText(Integer.toString(user.getPoints()));
                     Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).placeholder(R.drawable.brain_only).into(userProfileImage);
-
-
                 } else {
                     Toast.makeText(context,  R.string.login_error, Toast.LENGTH_LONG).show();
                     UI.clearBackstack(supportFragmentManager);
@@ -75,8 +79,6 @@ public class ProfileFragment extends BaseFragment {
                 UI.clearBackstack(supportFragmentManager);
             }
         });
-
-        return rootView;
     }
 
     public static ProfileFragment newInstance() {

@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="147dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -93,6 +93,7 @@
             android:id="@+id/etSignUpEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="Емаил"
             android:inputType="textEmailAddress" />
 
@@ -100,15 +101,32 @@
             android:id="@+id/etSignUpUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="Корисничко име"/>
 
-        <EditText
-            android:id="@+id/etSignUpPassword"
+        <!--Password-->
+        <RelativeLayout
+            android:id="@+id/loginPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Лозинка"
-            android:inputType="textPassword" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/loginUsername">
+            <EditText
+                android:id="@+id/etSignUpPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Лозинка"
+                android:inputType="textPassword" />
 
+            <Button
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:drawableRight="@drawable/ic_visibility_off_black"
+                android:id="@+id/btnSignUpVisiblePassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/etSignUpPassword"
+                android:layout_alignBottom="@+id/etSignUpPassword" />
+        </RelativeLayout>
 
 
         <Button
@@ -117,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:text="Зачувај" />
     </LinearLayout>
 

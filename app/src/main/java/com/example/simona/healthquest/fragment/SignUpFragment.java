@@ -11,8 +11,10 @@ package com.example.simona.healthquest.fragment;
         import android.os.Bundle;
         import android.provider.MediaStore;
         import android.support.annotation.Nullable;
+        import android.text.InputType;
         import android.util.Base64;
         import android.view.LayoutInflater;
+        import android.view.MotionEvent;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.Button;
@@ -52,6 +54,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
     private ImageView ivRegisterProfileImage;
     private Button btnChooseFromGallery;
     private Button btnTakePicture;
+    private Button btnSignUpVisiblePassword;
     static final int REQUEST_IMAGE_CAPTURE = 100;
     static final int REQUEST_IMAGE_GALLERY = 1;
 
@@ -61,6 +64,8 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         rootView = inflater.inflate(R.layout.fragment_sign_up, container, false);
         btnRegister = (Button) rootView.findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(this);
+        btnSignUpVisiblePassword = (Button) rootView.findViewById(R.id.btnSignUpVisiblePassword);
+
         etSignUpName = (EditText) rootView.findViewById(R.id.etSignUpName);
         etSignUpSurName = (EditText) rootView.findViewById(R.id.etSignUpSurName);
         etSignUpEmail = (EditText) rootView.findViewById(R.id.etSignUpEmail);
@@ -72,6 +77,23 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         btnTakePicture.setOnClickListener(this);
         btnChooseFromGallery.setOnClickListener(this);
 
+        btnSignUpVisiblePassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        etSignUpPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        btnSignUpVisiblePassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_black, 0);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        etSignUpPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                        btnSignUpVisiblePassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_off_black, 0);
+                        etSignUpPassword.setTypeface(etSignUpUsername.getTypeface());
+                        break;
+                }
+                return true;
+            }
+        });
 
         return rootView;
     }

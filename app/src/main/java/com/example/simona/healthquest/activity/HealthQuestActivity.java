@@ -22,9 +22,11 @@ import android.widget.Toast;
 
 import com.example.simona.healthquest.R;
 import com.example.simona.healthquest.fragment.BaseFragment;
+import com.example.simona.healthquest.fragment.GameFragment;
 import com.example.simona.healthquest.fragment.LoginFragment;
 import com.example.simona.healthquest.fragment.MainFragment;
 import com.example.simona.healthquest.fragment.ProfileFragment;
+import com.example.simona.healthquest.fragment.ProgressBarFragment;
 import com.example.simona.healthquest.helper.JSON;
 import com.example.simona.healthquest.log.LogCatLogger;
 import com.example.simona.healthquest.log.Logger;
@@ -100,13 +102,11 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
         if (id == R.id.nav_home) {
             UI.clearBackstack(getSupportFragmentManager());
         }else if(id == R.id.nav_profile){
-            UI.addFragment(getSupportFragmentManager(), R.id.container_layout, ProfileFragment.newInstance(), true, 0, 0);
-        }else if(id == R.id.nav_friends){
-
-        }else if(id == R.id.nav_notifications){
-
-        }else if(id == R.id.nav_settings){
-
+            BaseFragment fragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.container_layout);
+            if(!(fragment instanceof ProfileFragment))  {
+                UI.clearBackstack(getSupportFragmentManager());
+                UI.addFragment(getSupportFragmentManager(), R.id.container_layout, ProfileFragment.newInstance(), true, 0, 0);
+            }
         }else if(id == R.id.nav_logout){
             logout();
         }
@@ -132,7 +132,7 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
 
         alertDialogBuilder
                 .setMessage(R.string.activity__alert_logout_body)
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton("Назад", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         BaseFragment baseFragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.container_layout);
                         if (baseFragment instanceof MainFragment) {
@@ -144,10 +144,8 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
                 .setPositiveButton(R.string.activity__alert_logout_btn, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         User user = (User) JSON.fromJson(Persistence.getInstance().getPersistence().getString(Persistence.KEY_USER, ""), User.class);
-
                         if(user.getFacebookAccount() != null && user.getFacebookAccount())
                             LoginManager.getInstance().logOut();
-
                         Persistence.getInstance().getPersistence().removeValueForKey(Persistence.KEY_USER);
                         UI.clearBackstack(getSupportFragmentManager());
                         UI.replaceFragment(getSupportFragmentManager(), R.id.container_layout, LoginFragment.newInstance(), false, 0, 0);
@@ -172,7 +170,6 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
                 }
                 break;
-
             default:
                 break;
         }
@@ -180,11 +177,41 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+
+        BaseFragment baseFragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.container_layout);
+        if(baseFragment instanceof GameFragment){
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Прекин на играта");
+            alertDialogBuilder
+                    .setMessage("Дали сте сигурни?")
+                    .setNegativeButton("Назад", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            UI.clearBackstack(getSupportFragmentManager());
+                            UI.replaceFragment(getSupportFragmentManager(), R.id.container_layout, MainFragment.newInstance(), false, 0, 0);
+                        }
+                    });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } else{
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+
+            BaseFragment fragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.container_layout);
+            if (fragment instanceof MainFragment) {
+                navigationView.getMenu().getItem(0).setChecked(true);
+            }
         }
+
+
     }
 }

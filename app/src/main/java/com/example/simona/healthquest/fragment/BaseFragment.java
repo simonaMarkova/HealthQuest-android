@@ -72,4 +72,6 @@ public class BaseFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 }

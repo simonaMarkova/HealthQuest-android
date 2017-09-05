@@ -86,29 +86,29 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
             case R.id.btnMainMiniGame:
                 openNewMiniGame();
                 break;
-            case R.id.btnExit:
-                exit();
-                break;
+//            case R.id.btnExit:
+//                exit();
+//                break;
             case R.id.btnRankList:
                 showRankList();
                 break;
-            case R.id.btnAbout:
-                showAbout();
-                break;
-            case R.id.btnTutorial:
-                showTutorial();
-                break;
+//            case R.id.btnAbout:
+//                showAbout();
+//                break;
+//            case R.id.btnTutorial:
+//                showTutorial();
+//                break;
 
         }
     }
-
-    private void showTutorial() {
-        UI.replaceFragment(supportFragmentManager, R.id.container_layout, TutorialFragment.newInstance(), true, 0,0);
-    }
-
-    private void showAbout() {
-        UI.replaceFragment(supportFragmentManager, R.id.container_layout, AboutFragment.newInstance(), true, 0,0);
-    }
+//
+//    private void showTutorial() {
+//        UI.replaceFragment(supportFragmentManager, R.id.container_layout, TutorialFragment.newInstance(), true, 0,0);
+//    }
+//
+//    private void showAbout() {
+//        UI.replaceFragment(supportFragmentManager, R.id.container_layout, AboutFragment.newInstance(), true, 0,0);
+//    }
 
     private void openNewMiniGame() {
         Bundle bundle = new Bundle();
@@ -116,46 +116,42 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
         UI.addFragment(supportFragmentManager,R.id.container_layout,GameFragment.newInstance(bundle),true,0,0);
     }
 
-    private void exit() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+//    private void exit() {
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+//
+//        alertDialogBuilder.setTitle(R.string.main_exit_title);
+//
+//        alertDialogBuilder
+//                .setMessage(R.string.main_exit_desc)
+//                .setNegativeButton(R.string.main_exit_cancel, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.cancel();
+//                    }
+//                })
+//                .setPositiveButton(R.string.main_exit_ok, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        getActivity().onBackPressed();
+//                    }
+//                });
+//
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//
+//        alertDialog.show();
+//    }
 
-        alertDialogBuilder.setTitle(R.string.main_exit_title);
-
-        alertDialogBuilder
-                .setMessage(R.string.main_exit_desc)
-                .setNegativeButton(R.string.main_exit_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                })
-                .setPositiveButton(R.string.main_exit_ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        getActivity().onBackPressed();
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        alertDialog.show();
-
-
-    }
-
-    private void showRankList()
-    {
+    private void showRankList() {
         UI.replaceFragment(supportFragmentManager, R.id.container_layout, RankFragment.newInstance(), true, 0,0);
     }
+
     private void openNewGame() {
         Bundle bundle = new Bundle();
         bundle.putString("type","game");
         UI.addFragment(supportFragmentManager,R.id.container_layout,GameFragment.newInstance(bundle),true,0,0);
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
     }
 
 
