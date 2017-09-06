@@ -64,7 +64,7 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
         holder.tvUsername.setText(user.getUsername());
         holder.tvName.setText(user.getFirstName()+ " " +user.getLastName());
         holder.tvPoints.setText(user.getPoints().toString());
-        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).placeholder(R.drawable.brain_only).into(holder.ivRankUser);
+        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).placeholder(R.drawable.brain_with_bg).into(holder.ivRankUser);
 
     }
 

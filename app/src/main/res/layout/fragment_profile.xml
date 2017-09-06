@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
         android:background="@color/colorPrimaryDarkBlue">
 
         <RelativeLayout
@@ -20,16 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="#fff">
-            <ImageView
+            android:layout_marginTop="20dp">
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userProfileImage"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:padding="10dp"
-                android:src="@drawable/brain_only"/>
+                android:src="@drawable/brain_with_bg" />
         </RelativeLayout>
-
 
 
         <TextView
@@ -42,6 +39,33 @@
             android:textSize="20sp"
             android:layout_margin="20dp"/>
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+
+        <Button
+            android:id="@+id/btnProfileTakePicture"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:text="Камера"
+            android:background="#fff"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <Button
+            android:id="@+id/btnProfileChooseFromGallery"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@android:drawable/ic_menu_gallery"
+            android:text="Галерија"
+            android:background="#fff"
+            android:textColor="@color/colorPrimaryDark"/>
+    </LinearLayout>
 
     <!--level-->
     <LinearLayout

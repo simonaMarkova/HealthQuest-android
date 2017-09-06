@@ -36,8 +36,10 @@ import com.example.simona.healthquest.persistance.SharedPreferencesPersistence;
 import com.example.simona.healthquest.util.Constants;
 import com.example.simona.healthquest.util.UI;
 import com.facebook.login.LoginManager;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +47,7 @@ import retrofit2.Response;
 public class HealthQuestActivity extends AppCompatActivity implements BaseFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     private static final int REQUEST_READ_PHONE_STATE = 1;
+    private static final int REQUEST_READ_EXTERNAL_STORAGE = 2;
     private NavigationView navigationView;
     private Toolbar toolbar;
 
@@ -76,9 +79,12 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
         }
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+        int permissionCheck2 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
+        }else if (permissionCheck2 != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
         } else {
             //TODO
         }
@@ -121,7 +127,7 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
         TextView tvNavHeaderNameSurname = (TextView) header.findViewById(R.id.tvNavHeaderNameSurname);
         tvNavHeaderNameSurname.setText(user.getFirstName() + " " + user.getLastName());
         ImageView navProfileImage = (ImageView) header.findViewById(R.id.navProfileImage);
-        Picasso.with(this).load(Constants.BASE_URL + "/user/photo/" + user.id).placeholder(R.drawable.brain_only).into(navProfileImage);
+        Picasso.with(this).load(Constants.BASE_URL + "/user/photo/" + user.id).memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain_with_bg).into(navProfileImage);
     }
 
     private void logout() {
@@ -163,6 +169,14 @@ public class HealthQuestActivity extends AppCompatActivity implements BaseFragme
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case REQUEST_READ_PHONE_STATE:
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    //TODO
+                } else {
+                    Toast.makeText(this, "Оваа апликација нема да работи соодветно без оваа дозвола!", Toast.LENGTH_SHORT).show();
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
+                }
+                break;
+            case REQUEST_READ_EXTERNAL_STORAGE:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     //TODO
                 } else {

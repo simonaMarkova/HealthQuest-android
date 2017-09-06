@@ -31,7 +31,7 @@
             android:textColor="#222"
             android:textSize="18sp" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivRankUser"
             android:layout_width="50dp"
             android:layout_height="50dp"

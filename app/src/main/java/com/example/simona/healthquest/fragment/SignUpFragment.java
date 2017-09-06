@@ -210,20 +210,11 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap != null) {
-                int w = ivRegisterProfileImage.getWidth();
-                int h = ivRegisterProfileImage.getHeight();
-                ivRegisterProfileImage.setImageBitmap(RotateBitmap(bitmap,0));
-                ivRegisterProfileImage.getLayoutParams().width = w;
-                ivRegisterProfileImage.getLayoutParams().height = h;
+
+                ivRegisterProfileImage.setImageBitmap(bitmap);
                 ivRegisterProfileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 super.onPostExecute(bitmap);
             }
-        }
-        public Bitmap RotateBitmap(Bitmap source, float angle) {
-            Matrix matrix = new Matrix();
-            matrix.postRotate(angle);
-            return Bitmap.createBitmap(source, 0, 0, source.getWidth(),
-                    source.getHeight(), matrix, true);
         }
 
     }
@@ -253,22 +244,13 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap != null) {
-                int w = ivRegisterProfileImage.getWidth();
-                int h = ivRegisterProfileImage.getHeight();
-                ivRegisterProfileImage.setImageBitmap(RotateBitmap(bitmap,0));
-                ivRegisterProfileImage.getLayoutParams().width = w;
-                ivRegisterProfileImage.getLayoutParams().height = h;
+
+                ivRegisterProfileImage.setImageBitmap(bitmap);
                 ivRegisterProfileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 super.onPostExecute(bitmap);
             }
         }
-        
-        public Bitmap RotateBitmap(Bitmap source, float angle) {
-            Matrix matrix = new Matrix();
-            matrix.postRotate(angle);
-            return Bitmap.createBitmap(source, 0, 0, source.getWidth(),
-                    source.getHeight(), matrix, true);
-        }
+
     }
 }
 

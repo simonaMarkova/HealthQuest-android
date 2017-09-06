@@ -66,4 +66,7 @@ public interface RetrofitInterface {
     @POST("/user/login")
     Call<User> login(@Body LoginInfo loginInfo);
 
+    @POST("/user/update-photo")
+    Call<Void> updatePhoto(@Body User user);
+
 }
