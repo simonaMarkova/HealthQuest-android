@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:background="#fff">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -32,7 +33,7 @@
 
         <!--Email-->
         <RelativeLayout
-            android:id="@+id/loginUsername"
+            android:id="@+id/loginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
@@ -41,11 +42,11 @@
             android:orientation="vertical"
             android:layout_below="@+id/loginTitle">
             <EditText
-                android:id="@+id/etLoginUsername"
+                android:id="@+id/etLoginEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="@string/login_hint_username"
+                android:hint="@string/login_hint_email"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
@@ -59,7 +60,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/loginUsername">
+            android:layout_below="@+id/loginEmail">
             <EditText
                 android:id="@+id/etLoginPassword"
                 android:layout_width="match_parent"

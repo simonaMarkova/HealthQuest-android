@@ -54,12 +54,6 @@ public interface RetrofitInterface {
     @GET("/answerImage/getByQuestion/{id}")
     Call<List<AnswerImage>> getImageAnswers(@Path("id") Long id);
 
-    @GET("/disease/random")
-    Call<Disease> getRandomDisease();
-
-    @GET("/question/disease/{diseaseId}/{userId}")
-    Call<Question> getDiseaseRandomQuestion(@Path("diseaseId") Long diseaseId, @Path("userId") Long userId);
-
     @POST("/user/facebook/login")
     Call<User> facebookLogin(@Body FacebookLogin facebookLogin);
 
@@ -68,5 +62,8 @@ public interface RetrofitInterface {
 
     @POST("/user/update-photo")
     Call<Void> updatePhoto(@Body User user);
+
+    @GET("/user/points/{id}")
+    Call<Integer> getPoints(@Path("id") Long id);
 
 }

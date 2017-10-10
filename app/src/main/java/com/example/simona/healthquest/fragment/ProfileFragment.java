@@ -33,7 +33,6 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,7 +45,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     private View rootView;
     private ImageView userProfileImage;
     private TextView userProfileName;
-    private TextView userProfileUsername;
+    private TextView userProfileEmail;
     private TextView userProfileLevel;
     private TextView userProfilePoints;
     private User user;
@@ -66,7 +65,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         rootView = inflater.inflate(R.layout.fragment_profile,container,false);
         userProfileImage = (ImageView) rootView.findViewById(R.id.userProfileImage);
         userProfileName = (TextView) rootView.findViewById(R.id.userProfileName);
-        userProfileUsername = (TextView) rootView.findViewById(R.id.userProfileUsername);
+        userProfileEmail = (TextView) rootView.findViewById(R.id.userProfileEmail);
         userProfileLevel = (TextView) rootView.findViewById(R.id.userProfileLevel);
         userProfilePoints = (TextView) rootView.findViewById(R.id.userProfilePoints);
 
@@ -83,16 +82,16 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     }
 
     public void setProfileInfo(){
+        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain_with_bg).into(userProfileImage);
         RetrofitManager.getInstance().getRetrofitService().getUser(user.id).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     Persistence.getInstance().getPersistence().setString(Persistence.KEY_USER, JSON.toJson(response.body(),User.class));
                     userProfileName.setText(user.getFirstName() + " " + user.getLastName());
-                    userProfileUsername.setText(user.getUsername());
+                    userProfileEmail.setText(user.getEmail());
                     userProfileLevel.setText(Integer.toString(user.getLevel().getLevel()));
                     userProfilePoints.setText(Integer.toString(user.getPoints()));
-                    Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain_with_bg).into(userProfileImage);
                 } else {
                     Toast.makeText(context,  R.string.login_error, Toast.LENGTH_LONG).show();
                     UI.clearBackstack(supportFragmentManager);
@@ -103,6 +102,20 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(context, R.string.login_error, Toast.LENGTH_LONG).show();
                 UI.clearBackstack(supportFragmentManager);
+            }
+        });
+
+        RetrofitManager.getInstance().getRetrofitService().getPoints(user.id).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful()) {
+                    userProfilePoints.setText(Integer.toString(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
             }
         });
     }
@@ -186,7 +199,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if(response.isSuccessful()){
                             ((HealthQuestActivity) getActivity()).updateNavDrawerInfo(user, ((HealthQuestActivity) getActivity()).getNavigationView());
-                            Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain_with_bg).into(userProfileImage);
                         }
                     }
 
@@ -240,7 +252,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if(response.isSuccessful()){
                             ((HealthQuestActivity) getActivity()).updateNavDrawerInfo(user, ((HealthQuestActivity) getActivity()).getNavigationView());
-                            Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain_with_bg).into(userProfileImage);
                         }
                     }
 

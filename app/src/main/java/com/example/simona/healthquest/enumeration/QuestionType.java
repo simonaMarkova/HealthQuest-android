@@ -16,4 +16,6 @@ public enum QuestionType {
 
     // choose the correct image for the offered question
     MULTIPLE_IMAGE_SELECT,
+
+    BONUS
 }

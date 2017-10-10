@@ -31,7 +31,7 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView tvUsername;
+
         public TextView tvName;
         public TextView tvPoints;
         public TextView tvPosition;
@@ -40,7 +40,7 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
+
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvPoints = (TextView) itemView.findViewById(R.id.tvPoints);
             tvPosition = (TextView) itemView.findViewById(R.id.tvPosition);
@@ -61,7 +61,6 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
         User user = users.get(position);
         position++;
         holder.tvPosition.setText(position + "");
-        holder.tvUsername.setText(user.getUsername());
         holder.tvName.setText(user.getFirstName()+ " " +user.getLastName());
         holder.tvPoints.setText(user.getPoints().toString());
         Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).placeholder(R.drawable.brain_with_bg).into(holder.ivRankUser);

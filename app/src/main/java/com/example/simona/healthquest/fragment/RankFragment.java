@@ -66,7 +66,6 @@ public class RankFragment extends BaseFragment{
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful()) {
                     users = response.body();
-                    Collections.sort(users, new PointsComparator());
                     usersAdapter.updateUsers(users);
                 }else {
                     Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();

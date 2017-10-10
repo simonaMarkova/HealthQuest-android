@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="?attr/actionBarSize"
     android:background="#fff"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true">
 
     <!--image and name-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="210dp"
         android:layout_gravity="center_horizontal"
-        android:background="@color/colorPrimaryDarkBlue">
+        android:background="@drawable/profile_bg">
 
         <RelativeLayout
             android:id="@+id/imageWrap"
@@ -20,10 +21,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userProfileImage"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:padding="10dp"
                 android:src="@drawable/brain_with_bg" />
         </RelativeLayout>
@@ -35,9 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageWrap"
             android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
             android:textColor="#fff"
-            android:textSize="20sp"
-            android:layout_margin="20dp"/>
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -49,106 +51,126 @@
 
         <Button
             android:id="@+id/btnProfileTakePicture"
-            android:layout_width="120dp"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:drawableLeft="@drawable/ic_photo_camera"
             android:text="Камера"
-            android:background="#fff"
             android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:id="@+id/btnProfileChooseFromGallery"
-            android:layout_width="120dp"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:drawableLeft="@android:drawable/ic_menu_gallery"
+            android:drawableLeft="@drawable/ic_image"
             android:text="Галерија"
-            android:background="#fff"
             android:textColor="@color/colorPrimaryDark"/>
     </LinearLayout>
 
-    <!--level-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@color/colorPramaryBlue"
-        android:orientation="horizontal"
-        android:padding="15dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_level"
-            android:textColor="#fff"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/userProfileLevel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#fff"
-            android:textSize="16sp"
-            android:gravity="end" />
-
-    </LinearLayout>
-
-    <!--points-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorPramaryBlue"
-        android:orientation="horizontal"
-        android:padding="15dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_points"
-            android:textColor="#fff"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/userProfilePoints"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#fff"
-            android:textSize="16sp"
-            android:gravity="end" />
-
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorPramaryBlue"
-        android:orientation="horizontal"
-        android:padding="15dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_username"
-            android:textColor="#fff"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/userProfileUsername"
+        <!--level-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:textColor="#fff"
-            android:textSize="16sp" />
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/colorDarkBlue"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_level"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/userProfileLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:gravity="end"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <!--points-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/colorDarkBlue"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/profile_points"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/userProfilePoints"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:gravity="end" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/colorDarkBlue"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/profile_email"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/userProfileEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="end"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
 
 
 </LinearLayout>

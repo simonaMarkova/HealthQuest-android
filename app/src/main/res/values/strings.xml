@@ -30,18 +30,16 @@
 
     <!--main layout-->
     <string name="main_btn_play">Играј</string>
-    <string name="main_btn_mini_game">Мини игра</string>
-    <string name="main_btn_about">За нас</string>
     <string name="main_btn_rankings">Ранг листа</string>
     <string name="main_btn_tutorial">Туториал</string>
-    <string name="main_btn_exit">Излез</string>
+
 
     <!--login fragment-->
-    <string name="login_invalid">Неточен емиал или лозинка!</string>
+    <string name="login_invalid">Неточен емиал или лозинка</string>
     <string name="login_error">Нешто не е во ред.\nОбидете се повторно..</string>
 
     <!--login layout-->
-    <string name="login_hint_username">Корисничко име</string>
+    <string name="login_hint_email">Емаил</string>
     <string name="login_hint_pass">Лозинка</string>
     <string name="login_btn_sign_in">Најави се</string>
     <string name="login_btn_facebook">Facebook</string>
@@ -59,7 +57,7 @@
     <string name="level_up">Браво!\nГо достигнавте ниво:\n%1$d</string>
 
     <!--profile layout-->
-    <string name="profile_username">Корисничко име: </string>
+    <string name="profile_email">Емаил: </string>
     <string name="profile_level">Ниво: </string>
     <string name="profile_points">Поени: </string>
 

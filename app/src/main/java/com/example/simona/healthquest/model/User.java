@@ -5,7 +5,6 @@ package com.example.simona.healthquest.model;
  */
 
 public class User extends BaseEntity {
-    private String username;
     private String password;
     private String email;
     private String firstName;
@@ -14,15 +13,6 @@ public class User extends BaseEntity {
     private Level level;
     private String profileImage;
     Boolean facebookAccount;
-
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;

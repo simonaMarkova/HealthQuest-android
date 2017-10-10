@@ -48,14 +48,12 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
     private EditText etSignUpName;
     private EditText etSignUpSurName;
     private EditText etSignUpEmail;
-    private EditText etSignUpUsername;
     private EditText etSignUpPassword;
-    private Level level;
     private ImageView ivRegisterProfileImage;
     private Button btnChooseFromGallery;
     private Button btnTakePicture;
     private Button btnSignUpVisiblePassword;
-    static final int REQUEST_IMAGE_CAPTURE = 100;
+    static final int REQUEST_IMAGE_CAPTURE = 2;
     static final int REQUEST_IMAGE_GALLERY = 1;
 
     @Nullable
@@ -69,7 +67,6 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         etSignUpName = (EditText) rootView.findViewById(R.id.etSignUpName);
         etSignUpSurName = (EditText) rootView.findViewById(R.id.etSignUpSurName);
         etSignUpEmail = (EditText) rootView.findViewById(R.id.etSignUpEmail);
-        etSignUpUsername = (EditText) rootView.findViewById(R.id.etSignUpUsername);
         etSignUpPassword = (EditText) rootView.findViewById(R.id.etSignUpPassword);
         ivRegisterProfileImage = (ImageView) rootView.findViewById(R.id.ivRegisterProfileImage);
         btnChooseFromGallery = (Button) rootView.findViewById(R.id.btnChooseFromGallery);
@@ -88,7 +85,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                     case MotionEvent.ACTION_UP:
                         etSignUpPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
                         btnSignUpVisiblePassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_off_black, 0);
-                        etSignUpPassword.setTypeface(etSignUpUsername.getTypeface());
+                        etSignUpPassword.setTypeface(etSignUpName.getTypeface());
                         break;
                 }
                 return true;
@@ -127,7 +124,6 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         user.setFirstName(etSignUpName.getText().toString());
         user.setLastName(etSignUpSurName.getText().toString());
         user.setEmail(etSignUpEmail.getText().toString());
-        user.setUsername(etSignUpUsername.getText().toString());
         user.setPassword(etSignUpPassword.getText().toString());
         user.setPoints(0);
         ivRegisterProfileImage.setDrawingCacheEnabled(true);
@@ -146,12 +142,11 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                     UI.replaceFragment(supportFragmentManager, R.id.container_layout, MainFragment.newInstance(), false, 0, 0);
 
                 } else {
-                    if (response.code() == 409)
-                    {
-                        Toast.makeText(context, "Корисничкото име е зафатено!", Toast.LENGTH_LONG).show();
+                    if (response.code() == 409) {
+                        Toast.makeText(context, "Постои корисник со тој емаил", Toast.LENGTH_LONG).show();
                     }
                     else
-                    Toast.makeText(context, "Неуспешна регистрација!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Неуспешна регистрација", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -182,7 +177,6 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
             new ConvertCameraImage().execute((Bitmap)extras.get("data"));
         }
         if(requestCode == REQUEST_IMAGE_GALLERY && resultCode == Activity.RESULT_OK){
