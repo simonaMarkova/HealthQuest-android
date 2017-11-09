@@ -11,12 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.simona.healthquest.R;
 import com.example.simona.healthquest.helper.JSON;
 import com.example.simona.healthquest.model.User;
+import com.example.simona.healthquest.network.RetrofitManager;
 import com.example.simona.healthquest.persistance.Persistence;
 import com.example.simona.healthquest.util.UI;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Simona on 7/17/2017.
@@ -58,8 +64,19 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
         user = (User) JSON.fromJson(Persistence.getInstance().getPersistence().getString(Persistence.KEY_USER, ""),User.class);
         if(user!=null){
             activity.updateNavDrawerInfo(user, activity.getNavigationView());
-        }
 
+            RetrofitManager.getInstance().getRetrofitService().getUser(user.id).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        Persistence.getInstance().getPersistence().setString(Persistence.KEY_USER, JSON.toJson(response.body(),User.class));
+                    }
+                }
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                }
+            });
+        }
 
         return rootView;
     }
@@ -90,7 +107,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener{
 
 
     private void showRankList() {
-        UI.replaceFragment(supportFragmentManager, R.id.container_layout, RankFragment.newInstance(), true, 0,0);
+        UI.addFragment(supportFragmentManager, R.id.container_layout, RankFragment.newInstance(), true, 0,0);
     }
 
     private void openNewGame() {

@@ -2,27 +2,20 @@ package com.example.simona.healthquest.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.simona.healthquest.R;
 import com.example.simona.healthquest.adapter.RecyclerUsersAdapter;
 import com.example.simona.healthquest.model.User;
 import com.example.simona.healthquest.network.RetrofitManager;
-import com.example.simona.healthquest.util.PointsComparator;
 import com.example.simona.healthquest.util.UI;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +29,6 @@ import retrofit2.Response;
 public class RankFragment extends BaseFragment{
 
     private View rootView;
-    private RelativeLayout usersRanking;
     private List<User> users;
     private RecyclerView rvUsersRanking;
     private RecyclerUsersAdapter usersAdapter;
@@ -53,14 +45,12 @@ public class RankFragment extends BaseFragment{
         RecyclerView.LayoutManager layoutManager =  new LinearLayoutManager(context);
         rvUsersRanking.setLayoutManager(layoutManager);
         rvUsersRanking.setAdapter(usersAdapter);
-
         prepareUsersData();
 
         return rootView;
     }
 
-    private void prepareUsersData()
-    {
+    private void prepareUsersData() {
         RetrofitManager.getInstance().getRetrofitService().getAllUsers().enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {

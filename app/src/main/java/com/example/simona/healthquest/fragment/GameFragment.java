@@ -1,8 +1,11 @@
 package com.example.simona.healthquest.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +36,7 @@ import com.example.simona.healthquest.network.RetrofitManager;
 import com.example.simona.healthquest.persistance.Persistence;
 import com.example.simona.healthquest.util.Constants;
 import com.example.simona.healthquest.util.UI;
+import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -76,14 +80,12 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private RecyclerImageAnswerAdapter imageAnswerAdapter;
     private User user;
     private Question question;
-    private Disease disease;
     private List<QuestionAnswer> answerList;
     private List<AnswerImage> answerImageList;
     private Date opened;
     private Date answered;
     private int numberQuestions;
     private int points;
-    private int pointsForMiniGame;
     private CountDownTimer timer;
     private CountDownTimer answerTimer;
     private TextView tvTimer;
@@ -154,7 +156,6 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
 
         numberQuestions = 5;
         points = 0;
-        pointsForMiniGame = 0;
 
         endOfGame.setVisibility(View.GONE);
         questionAnswer.setVisibility(View.GONE);
@@ -162,7 +163,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         questionImageAnswers.setVisibility(View.GONE);
         startOfGame.setVisibility(View.VISIBLE);
         tvStart.setText(R.string.game_countdown);
-        timer = new CountDownTimer(6000, 1000) {
+        timer = new CountDownTimer(4000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 tvCountDown.setText(Integer.toString((int)millisUntilFinished/1000));
@@ -202,6 +203,9 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                     getAnswersForQuestion();
                 }else {
                     Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                    toolbar.setVisibility(View.VISIBLE);
+                    DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     UI.clearBackstack(supportFragmentManager);
                 }
             }
@@ -209,6 +213,9 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onFailure(Call<Question> call, Throwable t) {
                 Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
+                toolbar.setVisibility(View.VISIBLE);
+                DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 UI.clearBackstack(supportFragmentManager);
             }
         });
@@ -373,7 +380,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
 
                                 tvEnd.setText(getString(R.string.game_win, points));
 
-                                if (points >= user.getLevel().getMaxPoints()) {
+                                if (user.getPoints()+points >= user.getLevel().getMaxPoints()) {
                                    updateLevelForUser();
                                 }
                                 tvTimer.setText("");
@@ -416,8 +423,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
 
                             tvEnd.setText(getString(R.string.game_win, points));
 
-                            if (points >= user.getLevel().getMaxPoints())
-                            {
+                            if (user.getPoints()+points >= user.getLevel().getMaxPoints()) {
                                 updateLevelForUser();
                             }
                             tvTimer.setText("");
@@ -474,8 +480,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
 
                                 tvEnd.setText(getString(R.string.game_win, points));
 
-                                if (points >= user.getLevel().getMaxPoints())
-                                {
+                                if (user.getPoints()+points >= user.getLevel().getMaxPoints()) {
                                     updateLevelForUser();
                                 }
                                 startOfGame.setVisibility(View.GONE);
@@ -518,8 +523,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
 
                             tvEnd.setText(getString(R.string.game_win, points));
 
-                            if (points >= user.getLevel().getMaxPoints())
-                            {
+                            if (user.getPoints()+points >= user.getLevel().getMaxPoints()) {
                                 updateLevelForUser();
                             }
                             startOfGame.setVisibility(View.GONE);
@@ -544,6 +548,25 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                     user = response.body();
                     Persistence.getInstance().getPersistence().setString(Persistence.KEY_USER, JSON.toJson(response.body(),User.class));
                     tvLevelUp.setText(getString(R.string.level_up, user.getLevel().getLevel()));
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                    alertDialogBuilder
+                            .setMessage("Бонус прашања?")
+                            .setNegativeButton("Не", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    alertDialog.show();
                 }else {
                     Toast.makeText(context,  R.string.game_error, Toast.LENGTH_LONG).show();
                     UI.clearBackstack(supportFragmentManager);

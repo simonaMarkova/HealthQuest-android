@@ -64,7 +64,22 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:id="@+id/relativeLayout">
-
+            <ImageView
+                android:id="@+id/cup"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/star_cup"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:id="@+id/tvLevelUp"
+                android:layout_below="@+id/cup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginBottom="30dp"
+                android:layout_centerHorizontal="true" />
             <TextView
                 android:id="@+id/tvEnd"
                 android:layout_width="wrap_content"
@@ -74,17 +89,6 @@
                 android:layout_marginBottom="20dp"
                 android:layout_below="@+id/tvLevelUp"
                 android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvLevelUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginBottom="30dp"
-                android:layout_centerHorizontal="true" />
             <Button
                 android:id="@+id/btnGoBack"
                 style="@style/ButtonStyle"

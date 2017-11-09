@@ -82,7 +82,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     }
 
     public void setProfileInfo(){
-        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain_with_bg).into(userProfileImage);
+        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).fit().centerCrop().memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain_with_bg).into(userProfileImage);
         RetrofitManager.getInstance().getRetrofitService().getUser(user.id).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
