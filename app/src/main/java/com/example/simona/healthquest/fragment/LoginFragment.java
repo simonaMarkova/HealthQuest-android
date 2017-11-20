@@ -193,12 +193,12 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
         @Override
         public void onCancel() {
-
+            Toast.makeText(context, "Cancel facebook", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onError(FacebookException error) {
-
+            Toast.makeText(context, "Error facebook"+error.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
 

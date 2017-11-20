@@ -3,17 +3,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:clickable="true"
-    android:background="#fff">
+    android:background="#fff"
+    android:paddingTop="20dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayout2">
 
         <!--Title-->
         <RelativeLayout
@@ -86,6 +80,7 @@
             android:layout_centerInParent="true"
             android:layout_below="@+id/loginPassword"
             android:layout_marginTop="50dp">
+
             <Button
                 android:id="@+id/loginSignInBtn"
                 style="@style/ButtonStyle"
@@ -120,20 +115,19 @@
             android:layout_height="wrap_content"
             android:visibility="gone"/>
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/btnSighUp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttons"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:backgroundTint="@android:color/transparent"
+            android:text="Регистрирај се"
+            android:textAlignment="center"
+            android:textSize="11sp" />
 
-    <Button
-        android:id="@+id/btnSighUp"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:backgroundTint="@android:color/transparent"
-        android:text="Регистрирај се"
-        android:textAlignment="center"
-        android:textSize="11sp" />
 
 
 </RelativeLayout>
