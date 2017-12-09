@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="?attr/actionBarSize"
     android:background="#fff"
-    android:orientation="vertical"
     android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
     android:weightSum="1">
 
     <!--image and name-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/profile_bg">
+        android:gravity="center"
+        android:background="@drawable/profile_bg"
+        android:layout_weight="0.4">
 
         <RelativeLayout
             android:id="@+id/imageWrap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp">
+            android:layout_centerHorizontal="true">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userProfileImage"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:padding="10dp"
-                android:src="@drawable/brain_with_bg" />
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/brain" />
         </RelativeLayout>
 
 
@@ -39,145 +39,140 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageWrap"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:textColor="#fff"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="0"
-        android:layout_marginBottom="10dp">
-
-        <Button
-            android:id="@+id/btnProfileTakePicture"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_photo_camera"
-            android:text="Камера"
-            android:textColor="@color/colorPrimaryDark"/>
-
-        <Button
-            android:id="@+id/btnProfileChooseFromGallery"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:drawableLeft="@drawable/ic_image"
-            android:text="Галерија"
-            android:textColor="@color/colorPrimaryDark"/>
-    </LinearLayout>
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="0.7">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-
-        android:weightSum="3">
-
-        <!--level-->
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.1">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/colorDarkBlue"
-            android:orientation="horizontal"
-            android:padding="15dp">
-
-            <TextView
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnProfileTakePicture"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_level"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:layout_gravity="center_vertical"/>
-
-            <TextView
-                android:id="@+id/userProfileLevel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:gravity="end"
-                android:layout_gravity="center_vertical"/>
-
-        </LinearLayout>
-
-        <!--points-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/colorDarkBlue"
-            android:orientation="horizontal"
-            android:padding="15dp">
-
-            <TextView
+                android:drawableLeft="@drawable/ic_photo_camera"
+                android:text="Камера"
+                android:textColor="@color/colorPrimaryDark" />
+            <Button
+                android:id="@+id/btnProfileChooseFromGallery"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/profile_points"
-                android:textColor="#fff"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/userProfilePoints"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:gravity="end" />
-
+                android:layout_marginLeft="10dp"
+                android:drawableLeft="@drawable/ic_image"
+                android:text="Галерија"
+                android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/colorDarkBlue"
-            android:orientation="horizontal"
-            android:padding="15dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="3">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/profile_email"
-                android:textColor="#fff"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/userProfileEmail"
+            <!--email-->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="end"
-                android:textColor="#fff"
-                android:textSize="16sp" />
+                android:layout_height="0dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingLeft="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorDarkBlue"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_email"
+                    android:textColor="#fff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/userProfileEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!--email-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingLeft="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorDarkBlue"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_level"
+                    android:textColor="#fff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/userProfileLevel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!--points-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingLeft="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorDarkBlue"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_points"
+                    android:textColor="#fff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/userProfilePoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

@@ -2,58 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryLight"
-    android:orientation="horizontal"
+    android:layout_marginBottom="5dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp">
+    android:layout_marginTop="5dp"
+    android:background="@color/colorPrimaryLight"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:weightSum="1">
+
         <TextView
             android:id="@+id/tvPosition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:gravity="center_vertical"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            android:layout_marginRight="30dp"
-            android:layout_gravity="center_vertical"/>
+            android:textSize="20sp" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivRankUser"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="30dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/brain_with_bg"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="center_vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivRankUser"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/brain" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center_vertical"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"/>
+            android:textSize="16sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" >
-
-            <TextView
-                android:id="@+id/tvPoints"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red"
-                android:textSize="30sp"
-                android:layout_alignParentRight="true"/>
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tvPoints"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="center_vertical|right"
+            android:textColor="@color/red"
+            android:textSize="30sp" />
 
     </LinearLayout>
 

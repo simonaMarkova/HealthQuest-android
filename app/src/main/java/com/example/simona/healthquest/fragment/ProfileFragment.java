@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +83,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     }
 
     public void setProfileInfo(){
-        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).fit().centerCrop().memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain_with_bg).into(userProfileImage);
+        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).fit().centerCrop().memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain).into(userProfileImage);
         RetrofitManager.getInstance().getRetrofitService().getUser(user.id).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -164,9 +165,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         }
     }
 
-    private class ConvertCameraImage extends AsyncTask<Bitmap,Void,Bitmap>
-    {
-
+    private class ConvertCameraImage extends AsyncTask<Bitmap,Void,Bitmap> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -198,7 +197,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if(response.isSuccessful()){
-                            ((HealthQuestActivity) getActivity()).updateNavDrawerInfo(user, ((HealthQuestActivity) getActivity()).getNavigationView());
+                            if(getActivity()!=null && !getActivity().isFinishing()) {
+                                ((HealthQuestActivity) getActivity()).updateNavDrawerInfo(user, ((HealthQuestActivity) getActivity()).getNavigationView());
+                            }
                         }
                     }
 
@@ -213,7 +214,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     }
 
     private class ConvertGalleryImage extends AsyncTask<Uri, Void, Bitmap> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -263,6 +263,4 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             }
         }
     }
-
-
 }

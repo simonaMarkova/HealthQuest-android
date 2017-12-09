@@ -118,6 +118,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UI.addFragment(supportFragmentManager, R.id.container_layout, ProgressBarFragment.newInstance(), true, 0, 0);
                 loginButton.performClick();
             }
         });
@@ -164,6 +165,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                                 public void onResponse(Call<User> call, Response<User> response) {
                                     if(response.isSuccessful()){
                                         Persistence.getInstance().getPersistence().setString(Persistence.KEY_USER, JSON.toJson(response.body(),User.class));
+                                        UI.popUpBackstack(supportFragmentManager);
                                         UI.replaceFragment(supportFragmentManager, R.id.container_layout, MainFragment.newInstance(), false, 0, 0);
                                     }else {
                                         Toast.makeText(context,  "Response error", Toast.LENGTH_LONG).show();
@@ -225,6 +227,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void login() {
+        UI.addFragment(supportFragmentManager, R.id.container_layout, ProgressBarFragment.newInstance(), true, 0, 0);
         if (Validate.getInstance().validatePassword(etLoginPassword.getText().toString())) {
             LoginInfo loginInfo = new LoginInfo();
             loginInfo.setEmail(etLoginEmail.getText().toString());
@@ -234,6 +237,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()) {
                         Persistence.getInstance().getPersistence().setString(Persistence.KEY_USER, JSON.toJson(response.body(),User.class));
+                        UI.popUpBackstack(supportFragmentManager);
                         UI.replaceFragment(supportFragmentManager, R.id.container_layout, MainFragment.newInstance(), false, 0, 0);
                     } else {
                         Toast.makeText(context, R.string.login_invalid, Toast.LENGTH_LONG).show();

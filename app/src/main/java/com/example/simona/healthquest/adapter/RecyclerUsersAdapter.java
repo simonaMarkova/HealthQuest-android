@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.simona.healthquest.R;
@@ -15,8 +13,6 @@ import com.example.simona.healthquest.model.User;
 import com.example.simona.healthquest.util.Constants;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -62,7 +58,7 @@ public class RecyclerUsersAdapter extends RecyclerView.Adapter<RecyclerUsersAdap
         holder.tvPosition.setText(position + "");
         holder.tvName.setText(user.getFirstName()+ " " +user.getLastName());
         holder.tvPoints.setText(user.getPoints().toString());
-        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).fit().centerCrop().memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain_with_bg).into(holder.ivRankUser);
+        Picasso.with(context).load(Constants.BASE_URL + "/user/photo/" + user.id).fit().centerCrop().memoryPolicy(MemoryPolicy.NO_CACHE).placeholder(R.drawable.brain).into(holder.ivRankUser);
     }
 
     @Override
