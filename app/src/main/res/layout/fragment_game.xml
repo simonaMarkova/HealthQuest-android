@@ -233,4 +233,44 @@
 
     </LinearLayout>
 
+
+    <!--BonusQuestions-->
+    <LinearLayout
+        android:id="@+id/bonusQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tvBonusQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:layout_weight="0.3"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <!--Answers-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvBonusQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:fadeScrollbars="false" />
+
+        <Button
+            android:id="@+id/btnGameSaveBonusQuestion"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.1"
+            android:padding="5dp"
+            android:text="@string/game_btn_save_answer" />
+
+    </LinearLayout>
+
 </LinearLayout>

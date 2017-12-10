@@ -1,5 +1,6 @@
 package com.example.simona.healthquest.network;
 
+import com.example.simona.healthquest.helper.BonusQuestion;
 import com.example.simona.healthquest.model.AnswerImage;
 import com.example.simona.healthquest.model.Disease;
 import com.example.simona.healthquest.model.FacebookLogin;
@@ -66,4 +67,6 @@ public interface RetrofitInterface {
     @GET("/user/points/{id}")
     Call<Integer> getPoints(@Path("id") Long id);
 
+    @GET("/question/bonus")
+    Call<List<BonusQuestion>> getBonus();
 }

@@ -12,6 +12,16 @@ public class Question extends BaseEntity {
     private Disease disease;
     private QuestionType questionType;
 
+    public String getIncorrectDescription() {
+        return incorrectDescription;
+    }
+
+    public void setIncorrectDescription(String incorrectDescription) {
+        this.incorrectDescription = incorrectDescription;
+    }
+
+    private String incorrectDescription;
+
     public String getQuestion() {
         return question;
     }
